@@ -25,7 +25,7 @@ The requirements are as follows:
 * Viewpoint should be as the image below ![alt text](screenshots/breakout_viewpoint.png "Sample application")
 * Paddle should be controllable with both keyboard and mouse
 * Multiple levels must be implemented, as well as title screen
-* Sphere/Box collision detection must be implemented
+* Circle/Box or Sphere/Box collision detection must be implemented.
 * Hits on the paddle should not be physically accurate, but gameplay driven; although the paddle can be implemented as a box, a hit on the paddle shouldn't just reflect the ball, but take in account where the paddle the hits the ball, i.e. if the ball hits the top of the paddle but almost at the side, it should bounce back to where it came, instead of the physically correct reflection vector.
 * Hits of the bricks should reflect using standard physics.
 
