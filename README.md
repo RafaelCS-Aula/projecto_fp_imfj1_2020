@@ -1,10 +1,8 @@
 # Introdução à Matemática e Física Para Videojogos I / Fundamentos de Programação - Final Project
 
-This is a very rudimentary, wireframe 3d engine.
-
 ![alt text](screenshots/game.png "Sample application")
 
-This serves as a basis for the "Introdução à Matemática e Física Para Videojogos I" and Fundamentos de Programação course, on the [Licenciatura em Videojogos][lv] da
+This serves as a basis for the "Introdução à Matemática e Física Para Videojogos I" and "Fundamentos de Programação" course, on the [Licenciatura em Videojogos][lv] da
 [Universidade Lusófona de Humanidades e Tecnologias][ULHT] in Lisbon.
 
 The engine was built using:
