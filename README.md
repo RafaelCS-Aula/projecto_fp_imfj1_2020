@@ -40,7 +40,7 @@ For extra credits, the following can be implemented:
 ## Project delivery
 
 * Project is individual
-* Project has to be delivered up 20th January 2020 (midnight), and link delivered on the course's Moodle page
+* Project has to be delivered up 21th January 2020 (midnight), and link delivered on the course's Moodle page
   * Deliverables have to include a link to the Github repo
     * If you want to use a private repository, instead of a public one, you can deliver all the files in a .zip file, __**INCLUDING**__ the .git directory for git usage analysis 
   * Project has to include a report, in a `readme.md` file. This report has to include the work done on the project, limitations, etc.
