@@ -1,14 +1,16 @@
 """Scene class definition"""
 from camera import Camera
+import pygame
 
 class Scene:
     """Scene class.
     It handles a scene, storing a list of objects and a camera/viewpoint"""
-    def __init__(self, name):
+    def __init__(self, name, bg_color):
         """
         Arguments:
 
             name {str} -- Name of the material, defaults to 'UnknownMesh'
+            bg_color {Color} -- default color of background
         """
         self.name = name
         """ {str} Name of the scene"""
@@ -16,6 +18,7 @@ class Scene:
         """ {Camera} Camera linked to this scene"""
         self.objects = []
         """ {List[GameObject]} List of 3d objects on the scene"""
+        self.BACKGROUND_COLOR = bg_color
 
     def add_object(self, obj):
         """Adds a 3d object to the scene.

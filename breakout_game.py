@@ -1,6 +1,5 @@
 import pygame
 import time
-import math
 
 from scene import Scene
 from camera import Camera
@@ -8,12 +7,11 @@ from camera import Camera
 
 HORIZONTAL_RESOLUTION = 1280
 VERTICAL_RESOLUTION = 720
-BACKGROUND_COLOR = pygame.Color(255, 0, 0) #red
+#BACKGROUND_COLOR = pygame.Color(255, 0, 0) #red
 
 
-scene_collection = []
 
-current_scene = 0
+__current_scene = Scene("empty", pygame.Color(0,255,0))
 
 def __Main():
     """
@@ -30,14 +28,12 @@ def __Main():
     menu_camera = Camera(False, HORIZONTAL_RESOLUTION, VERTICAL_RESOLUTION)
     
     # Scene initialisation
-    game_scene = Scene("GameScene")
-    menu_scene = Scene("MainMenu")
+    game_scene = Scene("GameScene", pygame.Color(0,0,255))
+    menu_scene = Scene("MainMenu",pygame.Color(255,0,0))
     
     game_scene.camera = game_camera
     menu_scene.camera = menu_camera
     
-    scene_collection.append(menu_scene)
-    scene_collection.append(game_scene)
     
     # Set up delta time
     delta_time = 0
@@ -50,6 +46,7 @@ def __Main():
    
     is_running = True
     
+    switch_scene(menu_scene)
     # Main game loop
     while is_running:
 
@@ -60,14 +57,17 @@ def __Main():
                 is_running = False
         
         # Update the Display
-        window.fill(BACKGROUND_COLOR)
-        if current_scene < len(scene_collection) and current_scene > -1:
-            scene_collection[current_scene].update_objects(delta_time)
-            scene_collection[current_scene].render(window)
+        window.fill(__current_scene.BACKGROUND_COLOR)
+        __current_scene.update_objects(delta_time)
+        __current_scene.render(window)
         pygame.display.flip()
         
         # Updates delta time, so we we know how long has it been since the last frame
         delta_time = time.time() - prev_time
         prev_time = time.time()
-    
+        
+def switch_scene(new_scene) -> Scene:
+    __current_scene = new_scene
+    __current_scene.start_scene()
+
 __Main()
