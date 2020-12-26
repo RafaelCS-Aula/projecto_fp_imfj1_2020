@@ -11,13 +11,11 @@ VERTICAL_RESOLUTION = 720
 BACKGROUND_COLOR = pygame.Color(255, 0, 0) #red
 
 
-is_running = True
-
 scene_collection = []
 
 current_scene = 0
 
-def Main():
+def __Main():
     """
     Main app loop
     """
@@ -72,4 +70,4 @@ def Main():
         delta_time = time.time() - prev_time
         prev_time = time.time()
     
-Main()
+__Main()
