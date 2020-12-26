@@ -15,14 +15,14 @@ class Scene:
         self.camera = Camera(True, 640, 480)
         """ {Camera} Camera linked to this scene"""
         self.objects = []
-        """ {List[Object3d]} List of 3d objects on the scene"""
+        """ {List[GameObject]} List of 3d objects on the scene"""
 
     def add_object(self, obj):
         """Adds a 3d object to the scene.
 
         Arguments:
 
-            obj {Object3d} -- 3d object to add to the scene
+            obj {GameObject} -- 3d object to add to the scene
         """
         if obj not in self.objects:
             self.objects.append(obj)
@@ -34,7 +34,7 @@ class Scene:
 
         Arguments:
 
-            obj {Object3d} -- 3d object to remove from the scene
+            obj {GameObject} -- 3d object to remove from the scene
         """
         if obj in self.objects:
             self.objects.remove(obj)
@@ -55,4 +55,19 @@ class Scene:
         # Render all root-level objects
         for obj in self.objects:
             obj.render(screen, clip_matrix)
+            
+    def start_scene(self):
+        """Executes the setup method for all game objects of the scene
+        """
+        for obj in self.objects:
+            obj.setup()
+            
+    def update_objects(self, delta):
+        """Updates all the objects' states
+
+        Args:
+            delta ([float]): Time passed since last frame
+        """
+        for obj in self.objects:
+            obj.update_behaviour(delta)
             

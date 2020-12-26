@@ -64,6 +64,7 @@ def Main():
         # Update the Display
         window.fill(BACKGROUND_COLOR)
         if current_scene < len(scene_collection) and current_scene > -1:
+            scene_collection[current_scene].update_objects(delta_time)
             scene_collection[current_scene].render(window)
         pygame.display.flip()
         
