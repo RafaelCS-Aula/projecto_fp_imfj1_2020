@@ -5,7 +5,7 @@ import pygame
 class Scene:
     """Scene class.
     It handles a scene, storing a list of objects and a camera/viewpoint"""
-    def __init__(self, name, bg_color):
+    def __init__(self, name, bg_color = pygame.Color(0,0,0)):
         """
         Arguments:
 
