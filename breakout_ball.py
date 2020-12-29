@@ -35,5 +35,18 @@ class Ball(GameObject):
 
     
     def update_behaviour(self, delta):
-        self.rotation = Quaternion.AngleAxis(Vector3(0,1,0), 1 * delta) * self.rotation
+        self.rotation = Quaternion.AngleAxis(self.up(), 100 * math.radians(delta)) * self.rotation
+        self.rotation = Quaternion.AngleAxis(Vector3(0,0,1), 60 * math.radians(delta)) * self.rotation
+        
         self.position += self.ball_speed * self.up() * delta
+        
+    def rotate_angle(self, angle):
+        """Rotates the ball to a certain angle, parallel to the ground
+
+        Args:
+            angle (Vector3): Angle in degrees to snap the rotation to
+        """
+        self.rotation = Quaternion.AngleAxis(Vector3(0,0,1), math.radians(angle))
+        
+        
+        
