@@ -9,8 +9,8 @@ from quaternion import Quaternion
 
 class Block(GameObject):
     
-    DEFAULT_HEIGHT = 1
-    DEFAULT_WIDTH = 1
+    DEFAULT_HEIGHT = 0.8
+    DEFAULT_WIDTH = 1.5
     DEFAULT_DEPTH = 1
     
     #mesh for all blocks
