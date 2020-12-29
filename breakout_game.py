@@ -10,6 +10,7 @@ from breakout_paddle import Paddle
 from vector3 import Vector3
 from color import Color
 from quaternion import Quaternion
+from breakout_levelbuilder import LevelBuilder
 #from color import Color
 
 HORIZONTAL_RESOLUTION = 1280
@@ -38,18 +39,19 @@ def __Main():
     game_camera = Camera(False, HORIZONTAL_RESOLUTION, VERTICAL_RESOLUTION)
     menu_camera = Camera(False, HORIZONTAL_RESOLUTION, VERTICAL_RESOLUTION)
     
-    
-    
-    # Calculate camera angle
-    game_camera.position -= Vector3(0, 10, 15)
-    origin = Vector3(0, 0, 0)
+    # Tilt camera to desired view
+    game_camera.position -= Vector3(0, 5, 20)
+    #origin = Vector3(0, 0, 0)
     #direction_to_origin = (game_camera.position - origin).normalized()
     #angle = math.atan2(direction_to_origin.y, direction_to_origin.x)
-    angle = -35
-    game_camera.rotation = Quaternion.AngleAxis(Vector3(1, 0 , 0), math.radians(angle) )
+    angle = -15
+    game_camera.rotation = Quaternion.AngleAxis(Vector3(1, 0, 0), math.radians(angle) )
     
     game_scene.camera = game_camera
     menu_scene.camera = menu_camera
+    level_builder = LevelBuilder("blocks")
+    level_builder.make_level(30)
+    game_scene.add_object(level_builder)
     # Set up delta time
     delta_time = 0
     prev_time = time.time()
@@ -60,17 +62,6 @@ def __Main():
     pygame.event.set_grab(False)
    
     is_running = True
-    
-    ################ Testing objects
-    ball_object = Ball(1)
-    block_object = Block(start_pos=Vector3(-3, 2, 0))
-    paddle_object = Paddle(color=Color(1, 0, 0, 0))
-    game_scene.add_object(ball_object)
-    game_scene.add_object(block_object)
-    game_scene.add_object(Block(start_pos=Vector3(3,4,0)))
-    game_scene.add_object(paddle_object)
-    
-    ################
     
     switch_scene(game_scene)
     # Main game loop
