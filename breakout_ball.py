@@ -1,4 +1,3 @@
-import pygame
 import math
 
 from breakout_gameobject import GameObject
@@ -7,8 +6,6 @@ from vector3 import Vector3
 from material import Material
 from color import Color
 from quaternion import Quaternion
-
-
 
 
 class Ball(GameObject):
@@ -21,7 +18,6 @@ class Ball(GameObject):
         self.radius = Vector3(radius, radius, radius)
         self.position = start_pos
         self.scale = Vector3(1,1,1)
-        #Create our mesh
         self.mesh = Mesh.create_sphere(self.radius, 6, 6)
         self.material = Material(color, "Ball Material")
         self.rotation = Quaternion.AngleAxis(Vector3(0,0,1), math.radians(180))
