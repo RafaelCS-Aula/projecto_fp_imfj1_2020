@@ -3,7 +3,7 @@ from vector3 import Vector3
 
 class Sphere_Collider(Collider):
     
-    def __init__(self, radius):
+    def __init__(self, radius: float):
         self.radius = radius
     
     def within_bounds(self, my_position: Vector3, other_point: Vector3):
