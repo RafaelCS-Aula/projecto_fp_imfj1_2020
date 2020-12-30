@@ -11,10 +11,11 @@ from bo_collider_sphere import Sphere_Collider
 
 class Ball(GameObject):
     
-    ball_speed = 0.2
+    ball_speed = 0
     starting_pos = Vector3(0,0,0)
-    DEFAULT_RADIUS = 1
-    DEFAULT_SPEED = 1
+    DEFAULT_RADIUS = 0.6
+    DEFAULT_SPEED = 3
+    SPEED_INCREMENT = 0.5
     
     def __init__(self, name, start_pos, radius = DEFAULT_RADIUS, speed = DEFAULT_SPEED,  color = Color(0,1,1,1)):
         self.radius = Vector3(radius, radius, radius)
@@ -26,8 +27,9 @@ class Ball(GameObject):
         self.name = name
         self.children = []
     
+        self.ball_speed = speed
         
-        self.my_collider = Sphere_Collider(radius)
+        self.my_collider = Sphere_Collider(radius * 0.2)
         self.handled_collisions = []
     
     def setup(self):
@@ -36,22 +38,71 @@ class Ball(GameObject):
 
     
     def update_behaviour(self, delta):
-        self.rotation = Quaternion.AngleAxis(self.up(), 100 * math.radians(delta)) * self.rotation
+        self.rotation = Quaternion.AngleAxis(self.up(), 100 * math.radians(delta * self.ball_speed)) * self.rotation
         
         if not self.my_collider.is_colliding:
+            #print("not hit")
             self.handled_collisions = []
         # Ball goes forward
+        #self.position.z = 0
         self.position += self.ball_speed * self.up() * delta
         
-    def handle_collisions(self, collisions: []):
+    def handle_collisions(self, collisions: [], delta):
+        
         unhandled_colisions = [c for c in collisions]
+      
         for col in unhandled_colisions:
-            if self.my_collider.is_colliding and col not in self.handled_collisions:
+            print("With: " + col.name)
+            print(col not in self.handled_collisions)
+            print(self.my_collider.is_colliding)
+            if col not in self.handled_collisions:
                 if col.name == "PADDLE":
                    print("PADDLE HIT")
+                   direction = self.position - col.position
+                   direction.normalize()
+                   dot = direction.dot(self.up())
+                   
+                   #clamp dot product to exactl 1 or -1
+                   if dot > 1:
+                       dot = 1
+                   elif dot < -1:
+                       dot = -1
+                    
+                   #print(dot)
+                   
+                   mag_product = direction.magnitude_squared() * self.up().magnitude_squared()
+                   
+                   #print(mag_product)
+                   angle_rad = math.acos(dot / mag_product)
+                   
+                   mod = -1
+                   if self.position.x < col.position.x:
+                       mod = 1
+                   self.rotate_angle(angle_rad * mod * 3)
+                   #self.rotation = Quaternion.AngleAxis(Vector3(0,0,1), math.radians(angle_rad * 3)) * self.rotation
                 else:
                    print("STANDART HIT")
+                   
+                   dot = self.up().dot(col.up())
+                   #clamp dot product to exactl 1 or -1
+                   if dot > 1:
+                       dot = 1
+                   elif dot < -1:
+                       dot = -1
+                    
+                   mag_product = self.up().magnitude_squared() * col.up().magnitude_squared()
+                   
+                   #print(mag_product)
+                   angle_rad = math.acos(dot / mag_product)
+                   
+                   self.rotate_angle(180 - angle_rad * 2)
+                   col.queue_destroy = True
+                
+                self.ball_speed += self.SPEED_INCREMENT
             self.handled_collisions.append(col)
+                #print(col.name)"""
+       
+        
         
        
        
