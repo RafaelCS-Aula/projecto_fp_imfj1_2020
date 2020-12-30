@@ -82,32 +82,27 @@ class Ball(GameObject):
                    #self.rotation = Quaternion.AngleAxis(Vector3(0,0,1), math.radians(angle_rad * 3)) * self.rotation
                 else:
                    print("STANDART HIT")
+                   # Reflection formula
+                   #reflectionDirection = ProjectileDirection - 2(ProjectileDirection DOT wallsNormalVector)*wallsNormalVector. 
                    
-                   dot = self.up().dot(col.up())
-                   #clamp dot product to exactl 1 or -1
-                   if dot > 1:
-                       dot = 1
-                   elif dot < -1:
-                       dot = -1
-                    
-                   mag_product = self.up().magnitude_squared() * col.up().magnitude_squared()
+                   
+                   ricochet = self.up() - (2*(self.up().dot(col.up().normalized()))) * col.up()
+                   
+                   print(ricochet)
+                   
+                   dot = ricochet.dot(col.up())
+                   mag_product = ricochet.magnitude_squared() * col.up().magnitude_squared()
                    
                    #print(mag_product)
                    angle_rad = math.acos(dot / mag_product)
                    
-                   self.rotate_angle(180 - angle_rad * 2)
+                   self.rotate_angle(180 - angle_rad)
                    col.queue_destroy = True
                 
                 self.ball_speed += self.SPEED_INCREMENT
             self.handled_collisions.append(col)
                 #print(col.name)"""
        
-        
-        
-       
-       
-         
-    
     def rotate_angle(self, angle):
         """Rotates the ball to a certain angle, parallel to the ground
 
