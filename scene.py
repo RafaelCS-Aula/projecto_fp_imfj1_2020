@@ -20,6 +20,8 @@ class Scene:
         """ {List[GameObject]} List of 3d objects on the scene"""
         self.BACKGROUND_COLOR = bg_color
 
+        self.collision_agents = []
+
     def add_object(self, obj):
         """Adds a 3d object to the scene.
 
@@ -64,13 +66,17 @@ class Scene:
         #        child.render(screen, clip_matrix)
             
     def start_scene(self):
-        """Executes the setup method for all game objects of the scene
+        """Executes the setup method for all game objects of the scene and gathers collision agents
         """
+        self.collision_agents = []
         for obj in range(len(self.objects)):
             self.objects[obj].setup()
-            #print("Parent Setup")
+            if(self.objects[obj].my_collider is not None):
+                self.collision_agents.append(self.objects[obj])
             for child in self.objects[obj].children:
                 child.setup()
+                if(child.my_collider is not None):
+                    self.collision_agents.append(child)
                 #print("Child setup")
             
     def update_objects(self, delta):
@@ -83,4 +89,18 @@ class Scene:
             self.objects[obj].update_behaviour(delta)
             for child in self.objects[obj].children:
                 child.update_behaviour(delta)
+                
+        # Detect Collisions
+        for current in range(len(self.collision_agents)):
+            for other in range(len(self.collision_agents)):
+                # Compare every collider against every other one
+                if other == current:
+                    continue
+                agent = self.collision_agents[current]
+                foreign = self.collision_agents[other]
+                
+                # Check if agent is colliding with foreign by checking if the
+                # closest point to agent on foregisn surface is within bounds
+                # of agent's collider
+                agent.my_collider.within_bounds(agent.position, agent.my_collider.closest_point_on_surface(foreign.position, agent.position))
             
