@@ -1,7 +1,8 @@
 import pygame
 
 from breakout_block import Block
-
+from bo_collider_aabb import AABB_Collider
+from vector3 import Vector3
 
 class Paddle(Block):
     
@@ -16,7 +17,7 @@ class Paddle(Block):
     H_RES = 0
     
     def setup(self):
-        pass
+        self.my_collider = AABB_Collider(Vector3(self.width, self.height, self.depth))
 
     def update_behaviour(self, delta):
         
