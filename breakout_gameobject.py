@@ -16,3 +16,7 @@ class GameObject(Object3d):
     @abstractmethod
     def update_behaviour(self, delta):
         pass
+
+    @abstractmethod
+    def handle_collisions(self, collisions: []):
+        pass

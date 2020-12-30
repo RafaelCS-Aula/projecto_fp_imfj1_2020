@@ -69,6 +69,7 @@ class Scene:
         """Executes the setup method for all game objects of the scene and gathers collision agents
         """
         self.collision_agents = []
+        
         for obj in range(len(self.objects)):
             self.objects[obj].setup()
             if(self.objects[obj].my_collider is not None):
@@ -92,15 +93,18 @@ class Scene:
                 
         # Detect Collisions
         for current in range(len(self.collision_agents)):
+            collisions = []
+            agent = self.collision_agents[current]
             for other in range(len(self.collision_agents)):
                 # Compare every collider against every other one
                 if other == current:
                     continue
-                agent = self.collision_agents[current]
                 foreign = self.collision_agents[other]
                 
                 # Check if agent is colliding with foreign by checking if the
                 # closest point to agent on foregisn surface is within bounds
                 # of agent's collider
-                agent.my_collider.within_bounds(agent.position, agent.my_collider.closest_point_on_surface(foreign.position, agent.position))
-            
+                if(agent.my_collider.within_bounds(agent.position, foreign.my_collider.closest_point_on_surface(foreign.position, agent.position))):
+                    
+                    collisions.append(foreign)
+            agent.handle_collisions(collisions)
