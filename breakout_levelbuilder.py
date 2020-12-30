@@ -41,7 +41,7 @@ class LevelBuilder(GameObject):
         
 
         
-        print(blocks_amount)
+        
         # Populate the level with blocks
         while placed_blocks < blocks_amount:
             for x in range(len(layout_grid[0])):
@@ -53,7 +53,7 @@ class LevelBuilder(GameObject):
                     if(rnd <= 100 * ((placed_blocks + 1)/(blocks_amount + 1))):
                         print((placed_blocks + 1)/(blocks_amount + 1))
                         # Add a block to the block grid in the right position
-                        block_grid.append(Block(start_pos=Vector3(self.SPACE_X * x, self.SPACE_Y * y, 0), color=Color(random.uniform(0.1, 1),random.uniform(0.1, 1), 0, 1 )))
+                        block_grid.append(Block("BLOCK", start_pos=Vector3(self.SPACE_X * x, self.SPACE_Y * y, 0), color=Color(random.uniform(0.1, 1),random.uniform(0.1, 1), 0, 1 )))
                         placed_blocks += 1
                         print("Placed ")
                         print(placed_blocks)

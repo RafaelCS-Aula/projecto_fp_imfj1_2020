@@ -54,9 +54,9 @@ def __Main():
     level_builder = LevelBuilder("blocks")
     game_scene.add_object(level_builder)
     
-    game_scene.add_object(Ball(start_pos=Vector3(0, -level_builder.GRID_Y * (level_builder.SPACE_Y - 1), 0)))
+    game_scene.add_object(Ball("BALL",start_pos=Vector3(0, -level_builder.GRID_Y * (level_builder.SPACE_Y -0.3), 0)))
                           
-    game_scene.add_object(Paddle(start_pos=Vector3(0, -level_builder.GRID_Y * level_builder.SPACE_Y, 0), color=Color(1,0,0,1)))
+    game_scene.add_object(Paddle("PADDLE", start_pos=Vector3(0, -level_builder.GRID_Y * level_builder.SPACE_Y, 0), color=Color(1,0,0,1)))
     
     # Set up delta time
     delta_time = 0
