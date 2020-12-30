@@ -12,9 +12,9 @@ class Ball(GameObject):
     
     ball_speed = 1
     starting_pos = Vector3(0,0,0)
-  
+    DEFAULT_RADIUS = 1
     
-    def __init__(self, radius, speed = ball_speed, start_pos = Vector3(0, 0, 0), color = Color(0,1,1,1)):
+    def __init__(self, radius = DEFAULT_RADIUS, speed = ball_speed, start_pos = Vector3(0, 0, 0), color = Color(0,1,1,1)):
         self.radius = Vector3(radius, radius, radius)
         self.position = start_pos
         self.scale = Vector3(1,1,1)
