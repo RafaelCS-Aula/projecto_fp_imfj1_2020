@@ -9,6 +9,7 @@ class GameObject(Object3d):
     Object in the scene with logic, inherits Object3d
     """
     my_collider: Collider = None
+    queue_destroy = False
     
     @abstractmethod
     def setup(self):
@@ -18,5 +19,5 @@ class GameObject(Object3d):
         pass
 
     @abstractmethod
-    def handle_collisions(self, collisions: []):
+    def handle_collisions(self, collisions: [], delta):
         pass
