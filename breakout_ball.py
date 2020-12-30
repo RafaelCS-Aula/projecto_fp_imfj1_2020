@@ -7,6 +7,7 @@ from material import Material
 from color import Color
 from quaternion import Quaternion
 
+from bo_collider_sphere import Sphere_Collider
 
 class Ball(GameObject):
     
@@ -26,14 +27,14 @@ class Ball(GameObject):
         self.tick = 0
     
     def setup(self):
-        pass    
+       self.my_collider = Sphere_Collider(self.radius)
         
 
     
     def update_behaviour(self, delta):
         self.rotation = Quaternion.AngleAxis(self.up(), 100 * math.radians(delta)) * self.rotation
-        self.rotation = Quaternion.AngleAxis(Vector3(0,0,1), 60 * math.radians(delta)) * self.rotation
         
+        # Ball goes forward
         self.position += self.ball_speed * self.up() * delta
         
     def rotate_angle(self, angle):
