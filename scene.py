@@ -58,12 +58,20 @@ class Scene:
         # Render all root-level objects
         for obj in self.objects:
             obj.render(screen, clip_matrix)
+        #for obj in range(len(self.objects)):
+        #    self.objects[obj].render(screen, clip_matrix)
+        #    for child in self.objects[obj].children:
+        #        child.render(screen, clip_matrix)
             
     def start_scene(self):
         """Executes the setup method for all game objects of the scene
         """
-        for obj in self.objects:
-            obj.setup()
+        for obj in range(len(self.objects)):
+            self.objects[obj].setup()
+            #print("Parent Setup")
+            for child in self.objects[obj].children:
+                child.setup()
+                #print("Child setup")
             
     def update_objects(self, delta):
         """Updates all the objects' states
@@ -71,6 +79,8 @@ class Scene:
         Args:
             delta ([float]): Time passed since last frame
         """
-        for obj in self.objects:
-            obj.update_behaviour(delta)
+        for obj in range(len(self.objects)):
+            self.objects[obj].update_behaviour(delta)
+            for child in self.objects[obj].children:
+                child.update_behaviour(delta)
             
