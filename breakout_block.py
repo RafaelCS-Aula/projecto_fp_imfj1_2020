@@ -45,9 +45,6 @@ class Block(GameObject):
         pass
     
     def handle_collisions(self, collisions: [], delta):
-        
-        for c in collisions:
-            print("Block HIT by:" + c.name)
-            self.queue_destroy = True
+        pass
         
         
