@@ -1,4 +1,3 @@
-import pygame
 from abc import abstractmethod
 
 from object3d import Object3d
