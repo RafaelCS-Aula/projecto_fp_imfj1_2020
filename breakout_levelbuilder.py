@@ -24,19 +24,22 @@ class LevelBuilder(GameObject):
     # Middle of level
     MID_X = GRID_X / 2
     #midpoint_Y = GRID_Y / 2
-        
+    
+    def __init__(self):
+        self.block_grid = []
+    
     def setup(self):
-        self.make_level(self.BASE_BLOCK_AMOUNT)
-        
+        #self.make_level(self.BASE_BLOCK_AMOUNT)
+        pass
         
         
     def update_behaviour(self, delta):
         pass
         
-    def make_level(self, blocks_amount):
+    def make_level(self, blocks_amount = BASE_BLOCK_AMOUNT):
         layout_grid = [[(x,y) for y in range(self.GRID_Y + 1)] for x in range(self.GRID_X + 1)]
         placed_blocks = 0
-        block_grid = []
+        self.block_grid = []
         self.children = []
         
 
@@ -53,7 +56,7 @@ class LevelBuilder(GameObject):
                     if(rnd <= 100 * ((placed_blocks + 1)/(blocks_amount + 1))):
                         print((placed_blocks + 1)/(blocks_amount + 1))
                         # Add a block to the block grid in the right position
-                        block_grid.append(Block("BLOCK", start_pos=Vector3(self.SPACE_X * x, self.SPACE_Y * y, 0), color=Color(random.uniform(0.1, 1),random.uniform(0.1, 1), 0, 1 )))
+                        self.block_grid.append(Block("BLOCK", start_pos=Vector3(self.SPACE_X * x, self.SPACE_Y * y, 0), color=Color(random.uniform(0.1, 1),random.uniform(0.1, 1), 0, 1 )))
                         placed_blocks += 1
                         print("Placed ")
                         print(placed_blocks)
@@ -62,14 +65,16 @@ class LevelBuilder(GameObject):
                     
             
                         
-        for i in range(0,len(block_grid)):
-            self.children.append(block_grid[i])
+        #for i in range(0,len(block_grid)):
+         #   self.children.append(block_grid[i])
         
         
         
         #Move block field to center of screen
         #self.position.y -= midpoint_Y
-        self.position.x -= self.MID_X 
+        #self.position.x -= self.MID_X 
+        for c in self.block_grid:
+            c.position.x -= self.MID_X
         
         # spawn paddle
        # paddle_obj = Paddle(start_pos=Vector3(midpoint_X, -GRID_Y * spaceY, 0), color=Color(1,0,0,1))

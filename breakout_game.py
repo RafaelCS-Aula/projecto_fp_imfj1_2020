@@ -51,10 +51,12 @@ def __Main():
     Paddle.V_RES = VERTICAL_RESOLUTION
     Paddle.H_RES = HORIZONTAL_RESOLUTION
     Paddle.CAMERA_CORRECTION = -game_camera.position.y + 7 #  at angle of -15
-    level_builder = LevelBuilder("blocks")
-    game_scene.add_object(level_builder)
-    
-    game_scene.add_object(Ball("BALL",start_pos=Vector3(0, -level_builder.GRID_Y * (level_builder.SPACE_Y -0.3), 0)))
+    level_builder = LevelBuilder()
+    level_builder.make_level()
+    for b in level_builder.block_grid:
+        game_scene.add_object(b)
+        
+    game_scene.add_object(Ball("BALL",start_pos=Vector3(0, -level_builder.GRID_Y * (level_builder.SPACE_Y - 0.3), 0)))
                           
     game_scene.add_object(Paddle("PADDLE", start_pos=Vector3(0, -level_builder.GRID_Y * level_builder.SPACE_Y, 0), color=Color(1,0,0,1)))
     
