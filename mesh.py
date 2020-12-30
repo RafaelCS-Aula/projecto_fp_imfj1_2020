@@ -92,15 +92,15 @@ class Mesh:
                               h - vout.y / vout.w))
 
             # Uncomment next line for statistics
-            t1 = time.time()
+            #t1 = time.time()
 
             # Render
             pygame.draw.polygon(screen, c, tpoly, material.line_width)
 
             # Uncomment next 3 lines for statistics
-            t2 = time.time()
-            Mesh.stat_transform_time += (t1 - t0)
-            Mesh.stat_render_time += (t2 - t1)
+            #t2 = time.time()
+            #Mesh.stat_transform_time += (t1 - t0)
+            #Mesh.stat_render_time += (t2 - t1)
 
     @staticmethod
     def create_cube(size, mesh=None):
