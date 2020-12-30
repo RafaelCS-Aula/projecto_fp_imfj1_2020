@@ -42,7 +42,7 @@ class AABB_Collider(Collider):
         Returns:
             Vector3: The closest point on the box's surface
         """
-        closest_point = other_point
+        closest_point = Vector3(other_point.x, other_point.y, other_point.z)
         aabb_bounds = self.__get_max_min(my_position)
         
         if other_point.x > aabb_bounds[0].x:
