@@ -37,4 +37,8 @@ class Paddle(Block):
                 # Taken from game sample
                 mouse_pos = ((mouse_pos[0] / self.H_RES) * 2 - 1, (mouse_pos[1] / self.V_RES) * 2 - 1)
                 self.position.x = mouse_pos[0] * self.CAMERA_CORRECTION # Multiply by camera's Y position at angle -35
-                #print(pygame.mouse.get_pos()[0])              
+                #print(pygame.mouse.get_pos()[0])  
+                            
+    def handle_collisions(self, collisions: [], delta):
+        for c in collisions:
+            print("Paddle HIT by:" + c.name)

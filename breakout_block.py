@@ -38,10 +38,16 @@ class Block(GameObject):
         
     def setup(self):
         self.my_collider = AABB_Collider(Vector3(self.width, self.height, self.depth))
+        print(self.position)
         
     
     def update_behaviour(self, delta):
         pass
     
+    def handle_collisions(self, collisions: [], delta):
+        
+        for c in collisions:
+            print("Block HIT by:" + c.name)
+            self.queue_destroy = True
         
         
