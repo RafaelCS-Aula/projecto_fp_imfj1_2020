@@ -4,13 +4,12 @@ import math
 
 from scene import Scene
 from camera import Camera
-from breakout_ball import Ball
-from breakout_block import Block
-from breakout_paddle import Paddle
 from vector3 import Vector3
 from color import Color
 from quaternion import Quaternion
 from breakout_levelbuilder import LevelBuilder
+from breakout_paddle import Paddle
+from breakout_ball import Ball
 #from color import Color
 
 HORIZONTAL_RESOLUTION = 1280
@@ -49,9 +48,16 @@ def __Main():
     
     game_scene.camera = game_camera
     menu_scene.camera = menu_camera
+    Paddle.V_RES = VERTICAL_RESOLUTION
+    Paddle.H_RES = HORIZONTAL_RESOLUTION
+    Paddle.CAMERA_CORRECTION = -game_camera.position.y + 7 #  at angle of -15
     level_builder = LevelBuilder("blocks")
-    level_builder.make_level(30)
     game_scene.add_object(level_builder)
+    
+    game_scene.add_object(Ball(start_pos=Vector3(0, -level_builder.GRID_Y * (level_builder.SPACE_Y - 1), 0)))
+                          
+    game_scene.add_object(Paddle(start_pos=Vector3(0, -level_builder.GRID_Y * level_builder.SPACE_Y, 0), color=Color(1,0,0,1)))
+    
     # Set up delta time
     delta_time = 0
     prev_time = time.time()
