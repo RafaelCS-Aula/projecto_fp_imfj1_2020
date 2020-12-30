@@ -79,6 +79,8 @@ class Scene:
                 if(child.my_collider is not None):
                     self.collision_agents.append(child)
                 #print("Child setup")
+        print("COLLIDERS: ")
+        print(len(self.collision_agents))
             
     def update_objects(self, delta):
         """Updates all the objects' states
@@ -86,12 +88,26 @@ class Scene:
         Args:
             delta ([float]): Time passed since last frame
         """
+        objects_destroy = []
         for obj in range(len(self.objects)):
+            
             self.objects[obj].update_behaviour(delta)
+            if self.objects[obj].queue_destroy:
+                objects_destroy.append(self.objects[obj])
+            
             for child in self.objects[obj].children:
-                child.update_behaviour(delta)
+                if child.queue_destroy:
+                    self.remove_object(child)
+                else:
+                    child.update_behaviour(delta)
+        
+        for o in objects_destroy:
+            self.remove_object(o)
+            if o in self.collision_agents:
+                self.collision_agents.remove(o)
                 
         # Detect Collisions
+        # For every agent go trough every other agent on the collection
         for current in range(len(self.collision_agents)):
             collisions = []
             agent = self.collision_agents[current]
@@ -107,4 +123,4 @@ class Scene:
                 if(agent.my_collider.within_bounds(agent.position, foreign.my_collider.closest_point_on_surface(foreign.position, agent.position))):
                     
                     collisions.append(foreign)
-            agent.handle_collisions(collisions)
+            agent.handle_collisions(collisions, delta)
