@@ -97,7 +97,8 @@ class Ball(GameObject):
                    angle_rad = math.acos(dot / mag_product)
                    
                    self.rotate_angle(180 - angle_rad)
-                   col.queue_destroy = True
+                   if col.name == "BLOCK":
+                       col.queue_destroy = True
                 
                 self.ball_speed += self.SPEED_INCREMENT
             self.handled_collisions.append(col)
