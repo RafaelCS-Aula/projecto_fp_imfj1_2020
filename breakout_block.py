@@ -29,7 +29,7 @@ class Block(GameObject):
         if (height == self.DEFAULT_HEIGHT) and (width == self.DEFAULT_WIDTH) and (depth == self.DEFAULT_DEPTH):
             self.mesh = self.BLOCK_MESH
         else:
-            self.mesh = Mesh.create_cube((self.height, self.width, self.depth))
+            self.mesh = Mesh.create_cube((self.width, self.height, self.depth))
         
         self.material = Material(color, "Block Material")
         self.children = []
@@ -46,5 +46,5 @@ class Block(GameObject):
     
     def handle_collisions(self, collisions: [], delta):
         pass
-        
+
         
