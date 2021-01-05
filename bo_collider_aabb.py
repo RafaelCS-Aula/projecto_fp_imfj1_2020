@@ -46,37 +46,44 @@ class AABB_Collider(Collider):
         closest_point = Vector3(other_point.x, other_point.y, other_point.z)
         aabb_bounds = self.__get_max_min(my_position)
         
+        surface_normal = Vector3(0,0,0)
+        
         if other_point.x > aabb_bounds[0].x:
             closest_point.x = aabb_bounds[0].x
+            surface_normal.x = 1    
         elif other_point.x < aabb_bounds[1].x:
             closest_point.x = aabb_bounds[1].x
-            
+            surface_normal.x = -1  
         if other_point.y > aabb_bounds[0].y:
             closest_point.y = aabb_bounds[0].y
+            surface_normal.y = 1  
         elif other_point.y < aabb_bounds[1].y:
             closest_point.y = aabb_bounds[1].y
+            surface_normal.y = -1  
             
         if other_point.z > aabb_bounds[0].z:
             closest_point.z = aabb_bounds[0].z
+            surface_normal.z = 1
         elif other_point.z < aabb_bounds[1].z:
             closest_point.z = aabb_bounds[1].z
+            surface_normal.z = -1
             
         #get the normal
-        surface_normal = Vector3(0,0,0)
-        if other_point.x == aabb_bounds[0].x:
-            surface_normal.x = 1
-        elif other_point.x == aabb_bounds[1].x:
-            surface_normal.x = -1
-        
-        if other_point.y == aabb_bounds[0].y:
-            surface_normal.y = 1
-        elif other_point.y == aabb_bounds[1].y:
-            surface_normal.y = -1
+       
+        #if other_point.x == aabb_bounds[0].x:
+        #    surface_normal.x = 1
+        #elif other_point.x == aabb_bounds[1].x:
+        #    surface_normal.x = -1
+       # 
+       # if other_point.y == aabb_bounds[0].y:
+        #    surface_normal.y = 1
+        #elif other_point.y == aabb_bounds[1].y:
+         #   surface_normal.y = -1
             
-        if other_point.z == aabb_bounds[0].z:
-            surface_normal.z = 1
-        elif other_point.z == aabb_bounds[1].z:
-            surface_normal.z = -1
+        #if other_point.z == aabb_bounds[0].z:
+        #    surface_normal.z = 1
+        #elif other_point.z == aabb_bounds[1].z:
+        #    surface_normal.z = -1
             
         return (closest_point, surface_normal)
     

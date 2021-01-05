@@ -84,19 +84,13 @@ class Ball(GameObject):
           #  print(self.my_collider.is_colliding)
             if col not in self.handled_collisions:
 
-                other_collision_point = col.my_collider.closest_point_on_surface(col.position, self.position)[0]
-                my_collision_point = self.my_collider.closest_point_on_surface(self.position, other_collision_point)[0]
+                my_collision_point = self.my_collider.closest_point_on_surface(self.position, col.position)
+                other_collision_point = col.my_collider.closest_point_on_surface(col.position, my_collision_point[0])
+                
                 
                 # Check the normal of the colision, assuming AABB colisions
-                collision_normal = Vector3(0,0,0)
-                if my_collision_point.x > self.position.x: #right side hit
-                    collision_normal = -col.right() #Hit surface is col's left side
-                elif my_collision_point.x < self.position.x:
-                    collision_normal = -col.right()
-                elif my_collision_point.y < self.position.y: # Bottom side
-                    collision_normal = col.up()
-                elif my_collision_point.y > self.position.y: # top side hit
-                    collision_normal = -col.up()
+                collision_normal = other_collision_point[1]
+                print(str(other_collision_point[0]) + str(other_collision_point[1]))
                     
                # if col.name == "PADDLE":
                #     print("PADDLE HIT")
@@ -130,8 +124,8 @@ class Ball(GameObject):
                    
                     
                     direction_normal_dot = self.direction_vector.dot(collision_normal)
-                    print(collision_normal)
-                    print(direction_normal_dot)
+                   
+                   # print(direction_normal_dot)
                    
                     ricochet = self.direction_vector - 2 * direction_normal_dot * collision_normal
                    
