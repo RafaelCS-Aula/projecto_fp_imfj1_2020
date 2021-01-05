@@ -33,7 +33,8 @@ def __Main():
     # Pygame initialization
     pygame.init()
     pygame.freetype.init()
-    GAME_FONT = pygame.freetype.SysFont("ComicSansMS.tff", 16)
+    pygame.display.set_caption("Breakout Breakdown Forever")
+    GAME_FONT = pygame.freetype.SysFont("ComicSansMS", 16)
     window = pygame.display.set_mode((HORIZONTAL_RESOLUTION, VERTICAL_RESOLUTION))
     
     
@@ -111,7 +112,7 @@ def switch_scene(new_scene) -> Scene:
 
 def get_controls(paddle_obj) -> Paddle:
     if paddle_obj.mouse_controlled:
-        return "MOUSE"
+        return "MOUSE [<-(')->]"
     else:
         return "ARROW KEYS [<-] [->]"
 __Main()
