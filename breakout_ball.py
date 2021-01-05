@@ -91,59 +91,29 @@ class Ball(GameObject):
                 # Check the normal of the colision, assuming AABB colisions
                 collision_normal = other_collision_point[1]
                 print(str(other_collision_point[0]) + str(other_collision_point[1]))
+                
+                
+                # Reflection formula
+                #reflectionDirection = ProjectileDirection - 2(ProjectileDirection DOT wallsNormalVector)*wallsNormalVector
                     
-               # if col.name == "PADDLE":
-               #     print("PADDLE HIT")
-               #     direction = self.position - col.position
-               #     direction.normalize()
-               #     dot = direction.dot(self.up())
-               #    
-               #     #clamp dot product to exactl 1 or -1
-               #     if dot > 1:
-               #         dot = 1
-               #     elif dot < -1:
-               #         dot = -1
+                direction_normal_dot = self.direction_vector.dot(collision_normal)
+                   
+                ricochet = self.direction_vector - 2 * direction_normal_dot * collision_normal 
                     
-                    #print(dot)
-                   
-                #    mag_product = direction.magnitude_squared() * self.up().magnitude_squared()
-                   
-                    #print(mag_product)
-                #    angle_rad = math.acos(dot / mag_product)
-                   
-                #    mod = -1
-                #    if self.position.x < col.position.x:
-                #        mod = 1
-                #    self.rotate_angle(-angle_rad)
-                   #self.rotation = Quaternion.AngleAxis(Vector3(0,0,1), math.radians(angle_rad * 3)) * self.rotation
-                #else:
-                if True:
+                if col.name == "PADDLE":
+                    print("PADDLE HIT")
+
+                    col_to_centre = other_collision_point[0] - col.position
+                    col_to_centre.normalize()
+                    
+                    ricochet = col_to_centre
+                    self.direction_vector = ricochet 
+                    print(ricochet)
+                else:
                     print("STANDART HIT")
-                   # Reflection formula
-                   #reflectionDirection = ProjectileDirection - 2(ProjectileDirection DOT wallsNormalVector)*wallsNormalVector. 
-                   
-                    
-                    direction_normal_dot = self.direction_vector.dot(collision_normal)
-                   
-                   # print(direction_normal_dot)
-                   
-                    ricochet = self.direction_vector - 2 * direction_normal_dot * collision_normal
-                   
                    
                     self.direction_vector = ricochet
-                 
-                    
-                    #dot = (min(1, max(-1, ricochet.dot(self.up()))))
-                    #print(dot)
-                    #mag_product = ricochet.magnitude_squared() * self.up().magnitude_squared()
-                    #print(mag_product)
-                    #print(dot / mag_product)
-                    #print(mag_product)
-                    #angle_rad = math.acos((min(1, max(-1,dot / mag_product))))
-                    #print(angle_rad)
-                    #self.rotate_angle(angle_rad)
-                    #self.rotation = Quaternion.AngleAxis(Vector3(0,0,1),math.radians(angle_rad * 10)) 
-                    
+                   
                     if col.name == "BLOCK":
                         col.queue_destroy = True
                 
