@@ -124,3 +124,10 @@ class Scene:
                     
                     collisions.append(foreign)
             agent.handle_collisions(collisions, delta)
+            
+    def get_objects_by_name(self, name):
+        listing = []
+        for obj in self.objects:
+            if obj.name == name:
+                listing.append(obj)
+        return listing
