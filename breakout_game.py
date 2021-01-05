@@ -34,7 +34,7 @@ def __Main():
     pygame.init()
     pygame.freetype.init()
     pygame.display.set_caption("Breakout Breakdown Forever")
-    GAME_FONT = pygame.freetype.SysFont("ComicSansMS", 16)
+    
     window = pygame.display.set_mode((HORIZONTAL_RESOLUTION, VERTICAL_RESOLUTION))
     
     
@@ -88,15 +88,9 @@ def __Main():
         window.fill(__current_scene.BACKGROUND_COLOR)
         __current_scene.update_objects(delta_time)
         __current_scene.render(window)
-        #Display Info Text
-        ball_act_str = pygame.key.name(game_ball.ACTIVATE_BALL_KEY)
+        
+       
         ctrls_swap_str = pygame.key.name(game_paddle.CONTROLS_FLIP_KEY)
-    
-        
-        GAME_FONT.render_to(window, (16, 200), "Press [" + ball_act_str +"] to activate ball", (255, 255, 255))
-        
-        GAME_FONT.render_to(window, (16, 240), "Press [" + ctrls_swap_str +"] to switch controls", (255, 255, 255))
-        GAME_FONT.render_to(window, (14, 260), get_controls(game_paddle), (220, 220, 220))
         
         pygame.draw.line(window, (120,0,0), (0, game_ball.LOWER_LIMIT + VERTICAL_RESOLUTION), (HORIZONTAL_RESOLUTION, game_ball.LOWER_LIMIT + VERTICAL_RESOLUTION), 10)
         pygame.display.flip()
@@ -110,9 +104,5 @@ def switch_scene(new_scene) -> Scene:
     __current_scene = new_scene
     __current_scene.start_scene()
 
-def get_controls(paddle_obj) -> Paddle:
-    if paddle_obj.mouse_controlled:
-        return "MOUSE [<-(')->]"
-    else:
-        return "ARROW KEYS [<-] [->]"
+
 __Main()

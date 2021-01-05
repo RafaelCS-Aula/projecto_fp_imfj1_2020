@@ -1,6 +1,8 @@
 import pygame
 import math
+import bo_score_keeper as ScoreKeeper
 
+from bo_text_display import TextDisplay
 from breakout_gameobject import GameObject
 from mesh import Mesh
 from vector3 import Vector3
@@ -41,9 +43,18 @@ class Ball(GameObject):
         self.handled_collisions = []
         
         self.active = False
+        
+        self.score_display = TextDisplay((16,300), "SCORE: ")
+        
+        self.activation_display = TextDisplay((16,200),  "Press [" + pygame.key.name(self.ACTIVATE_BALL_KEY) +"] to activate ball")
+        
+        self.combo = 0
     
     def setup(self):
        self.reset_ball()
+       self.add_child(self.activation_display)
+       self.add_child(self.score_display)
+       
         
 
     
@@ -53,6 +64,8 @@ class Ball(GameObject):
             if keys[self.ACTIVATE_BALL_KEY]:
                 self.active = True
             return
+        
+        self.score_display.text = "-- SCORE -- \n " + str(ScoreKeeper.current_score)
         
         self.rotation = Quaternion.AngleAxis(self.up(), 100 * math.radians(delta * self.ball_speed)) * self.rotation
         
@@ -102,7 +115,7 @@ class Ball(GameObject):
                     
                 if col.name == "PADDLE":
                     print("PADDLE HIT")
-
+                    self.combo = 0
                     col_to_centre = other_collision_point[0] - col.position
                     col_to_centre.normalize()
                     
@@ -116,6 +129,9 @@ class Ball(GameObject):
                    
                     if col.name == "BLOCK":
                         col.queue_destroy = True
+                        
+                        ScoreKeeper.current_score += ScoreKeeper.SCORE_BLOCK_DESTROY + (ScoreKeeper.SCORE_COMBO_BONUS * self.combo)
+                        self.combo += 1
                 
                 self.ball_speed += self.SPEED_INCREMENT
             self.handled_collisions.append(col)

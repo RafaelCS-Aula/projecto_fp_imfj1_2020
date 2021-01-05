@@ -151,5 +151,5 @@ class Scene:
                 self.text_agents.append(self.objects[obj])
             for child in self.objects[obj].children:
                 if child.name == "TEXTDISPLAY":
-                    self.text_agents.append()(child)
+                    self.text_agents.append(child)
         
