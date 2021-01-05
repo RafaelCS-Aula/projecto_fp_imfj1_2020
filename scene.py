@@ -68,17 +68,13 @@ class Scene:
     def start_scene(self):
         """Executes the setup method for all game objects of the scene and gathers collision agents
         """
-        self.collision_agents = []
+        
         
         for obj in range(len(self.objects)):
             self.objects[obj].setup()
-            if(self.objects[obj].my_collider is not None):
-                self.collision_agents.append(self.objects[obj])
             for child in self.objects[obj].children:
                 child.setup()
-                if(child.my_collider is not None):
-                    self.collision_agents.append(child)
-                #print("Child setup")
+        self.update_collision_agents()
         print("COLLIDERS: ")
         print(len(self.collision_agents))
             
@@ -131,3 +127,14 @@ class Scene:
             if obj.name == name:
                 listing.append(obj)
         return listing
+
+    def update_collision_agents(self):
+        self.collision_agents = []
+        
+        for obj in range(len(self.objects)):
+            if(self.objects[obj].my_collider is not None):
+                self.collision_agents.append(self.objects[obj])
+            for child in self.objects[obj].children:
+                if(child.my_collider is not None):
+                    self.collision_agents.append(child)
+        

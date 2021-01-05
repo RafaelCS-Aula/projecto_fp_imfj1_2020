@@ -40,7 +40,7 @@ class LevelBuilder(GameObject):
         
     def update_behaviour(self, delta):
         self.living_blocks = self.my_scene.get_objects_by_name("BLOCK")
-        print(len(self.living_blocks))
+        #print(len(self.living_blocks))
         if len(self.living_blocks) <= 0:
             self.GAME_BALL.reset_ball()
             self.make_level(self.my_scene, min(self.GRID_X * self.GRID_Y, self.BASE_BLOCK_AMOUNT + self.LEVEL_BLOCK_INCREMENT))
@@ -67,9 +67,9 @@ class LevelBuilder(GameObject):
                         # Add a block to the block grid in the right position
                         self.block_grid.append(Block("BLOCK", start_pos=Vector3(self.SPACE_X * x, self.SPACE_Y * y, 0), color=Color(random.uniform(0.1, 1),random.uniform(0.1, 1), 0, 1 )))
                         placed_blocks += 1
-                        print("Placed ")
-                        print(placed_blocks)
-                        print("Blocks")
+                        #print("Placed ")
+                       # print(placed_blocks)
+                        #print("Blocks")
         # Side Walls
         self.block_grid.append(Wall("WALL", start_pos=Vector3(self.GRID_X * self.SPACE_X , 0, 0), color=Color(1,1,1,1), height= 15))
         self.block_grid.append(Wall("WALL", start_pos=Vector3(-self.SPACE_X, 0, 0), color=Color(1,1,1,1), height= 15))
@@ -87,7 +87,7 @@ class LevelBuilder(GameObject):
                           
         scene_to_populate.add_object(self.GAME_PADDLE)
         
-        
+        scene_to_populate.update_collision_agents()
         
         
         #for i in range(0,len(block_grid)):
