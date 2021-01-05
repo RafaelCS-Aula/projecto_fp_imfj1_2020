@@ -1,4 +1,5 @@
 import pygame
+import pygame.freetype
 import time
 import math
 
@@ -14,7 +15,8 @@ from breakout_ball import Ball
 
 HORIZONTAL_RESOLUTION = 1280
 VERTICAL_RESOLUTION = 720
-#BACKGROUND_COLOR = pygame.Color(255, 0, 0) #red
+
+
 
 
 
@@ -30,6 +32,8 @@ def __Main():
     """
     # Pygame initialization
     pygame.init()
+    pygame.freetype.init()
+    GAME_FONT = pygame.freetype.SysFont("ComicSansMS.tff", 16)
     window = pygame.display.set_mode((HORIZONTAL_RESOLUTION, VERTICAL_RESOLUTION))
     
     
@@ -56,9 +60,11 @@ def __Main():
     for b in level_builder.block_grid:
         game_scene.add_object(b)
         
-    game_scene.add_object(Ball("BALL",start_pos=Vector3(0, -level_builder.GRID_Y * (level_builder.SPACE_Y - 0.3), 0)))
+    game_ball = Ball("BALL",start_pos=Vector3(0, -level_builder.GRID_Y * (level_builder.SPACE_Y - 0.3), 0))
+    game_scene.add_object(game_ball)
                           
-    game_scene.add_object(Paddle("PADDLE", start_pos=Vector3(0, -level_builder.GRID_Y * level_builder.SPACE_Y, 0), color=Color(1,0,0,1)))
+    game_paddle = Paddle("PADDLE", start_pos=Vector3(0, -level_builder.GRID_Y * level_builder.SPACE_Y, 0), color=Color(1,0,0,1))
+    game_scene.add_object(game_paddle)
     
     # Set up delta time
     delta_time = 0
@@ -85,6 +91,17 @@ def __Main():
         window.fill(__current_scene.BACKGROUND_COLOR)
         __current_scene.update_objects(delta_time)
         __current_scene.render(window)
+        #Display Info Text
+        ball_act_str = pygame.key.name(game_ball.ACTIVATE_BALL_KEY)
+        ctrls_swap_str = pygame.key.name(game_paddle.CONTROLS_FLIP_KEY)
+    
+        
+        GAME_FONT.render_to(window, (16, 200), "Press [" + ball_act_str +"] to activate ball", (255, 255, 255))
+        
+        GAME_FONT.render_to(window, (16, 240), "Press [" + ctrls_swap_str +"] to switch controls", (255, 255, 255))
+        GAME_FONT.render_to(window, (14, 260), get_controls(game_paddle), (220, 220, 220))
+        
+        pygame.draw.line(window, (120,0,0), (0, game_ball.LOWER_LIMIT + VERTICAL_RESOLUTION), (HORIZONTAL_RESOLUTION, game_ball.LOWER_LIMIT + VERTICAL_RESOLUTION), 10)
         pygame.display.flip()
         
         # Updates delta time, so we we know how long has it been since the last frame
@@ -96,4 +113,9 @@ def switch_scene(new_scene) -> Scene:
     __current_scene = new_scene
     __current_scene.start_scene()
 
+def get_controls(paddle_obj) -> Paddle:
+    if paddle_obj.mouse_controlled:
+        return "MOUSE"
+    else:
+        return "ARROW KEYS [<-] [->]"
 __Main()
