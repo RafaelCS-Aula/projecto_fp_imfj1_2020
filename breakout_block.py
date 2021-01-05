@@ -33,11 +33,11 @@ class Block(GameObject):
         
         self.material = Material(color, "Block Material")
         self.children = []
-        
+        self.my_collider = AABB_Collider(Vector3(self.width, self.height, self.depth))
     
         
     def setup(self):
-        self.my_collider = AABB_Collider(Vector3(self.width, self.height, self.depth))
+        
         print(self.position)
         
     
