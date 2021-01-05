@@ -5,7 +5,7 @@ from vector3 import Vector3
 class Wall(Block):
     def setup(self):
         self.my_collider = AABB_Collider(Vector3(self.width, self.height, self.depth))
-        print(self.position)
+        
         
     
     def update_behaviour(self, delta):
