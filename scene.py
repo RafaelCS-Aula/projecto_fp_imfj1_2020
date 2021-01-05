@@ -120,7 +120,7 @@ class Scene:
                 # Check if agent is colliding with foreign by checking if the
                 # closest point to agent on foregisn surface is within bounds
                 # of agent's collider
-                if(agent.my_collider.within_bounds(agent.position, foreign.my_collider.closest_point_on_surface(foreign.position, agent.position))):
+                if(agent.my_collider.within_bounds(agent.position, foreign.my_collider.closest_point_on_surface(foreign.position, agent.position)[0])):
                     
                     collisions.append(foreign)
             agent.handle_collisions(collisions, delta)

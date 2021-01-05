@@ -40,7 +40,8 @@ class AABB_Collider(Collider):
             other_point (Vector3): Point being tested
 
         Returns:
-            Vector3: The closest point on the box's surface
+            Tuple(Vector3, Vector3): The closest point on the box's surface in [0], and the surface normal of the point in [1]
+            
         """
         closest_point = Vector3(other_point.x, other_point.y, other_point.z)
         aabb_bounds = self.__get_max_min(my_position)
@@ -60,7 +61,24 @@ class AABB_Collider(Collider):
         elif other_point.z < aabb_bounds[1].z:
             closest_point.z = aabb_bounds[1].z
             
-        return closest_point
+        #get the normal
+        surface_normal = Vector3(0,0,0)
+        if other_point.x == aabb_bounds[0].x:
+            surface_normal.x = 1
+        elif other_point.x == aabb_bounds[1].x:
+            surface_normal.x = -1
+        
+        if other_point.y == aabb_bounds[0].y:
+            surface_normal.y = 1
+        elif other_point.y == aabb_bounds[1].y:
+            surface_normal.y = -1
+            
+        if other_point.z == aabb_bounds[0].z:
+            surface_normal.z = 1
+        elif other_point.z == aabb_bounds[1].z:
+            surface_normal.z = -1
+            
+        return (closest_point, surface_normal)
     
     def __get_max_min(self, origin: Vector3):
         """Return the Max and Min points of this box, assuming constant dimensions

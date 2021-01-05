@@ -16,10 +16,9 @@ class Collider():
         
     @abstractmethod
     def closest_point_on_surface(self, my_position, other_point):
-        """Returns the closest point in this collider's surface to the other point
+        """Returns the closest point in this collider's surface to the other point and the normal of that surface
 
         Args:
             my_position (Vector3): The position/center of this collider
             other_point (Vector3): The point to test
         """
-           

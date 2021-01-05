@@ -16,10 +16,21 @@ class Sphere_Collider(Collider):
         return self.is_colliding
             
     def closest_point_on_surface(self, my_position, other_point: Vector3):
-        
+        """Get the closest point on the surface of the sphere towards other point
+
+        Args:
+            my_position (Vector3): Center position of sphere
+            other_point (Vector3): Point being tested
+
+        Returns:
+            Tuple(Vector3, Vector3): The closest point on the sphere's surface in [0], and the surface normal of the point in [1]
+            
+        """
         direction = other_point - my_position
         direction.normalize()
         direction *= self.radius
         closest_point = my_position + direction
-        return closest_point
+        
+        
+        return (closest_point, direction)
     

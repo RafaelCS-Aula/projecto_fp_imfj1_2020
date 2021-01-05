@@ -64,8 +64,8 @@ class Ball(GameObject):
         
         
         self.position += self.ball_speed * self.direction_vector.normalized() * delta
-        
-        #Check input to activate ball
+        #print(self.direction_vector)
+       
         
             
         
@@ -84,8 +84,8 @@ class Ball(GameObject):
           #  print(self.my_collider.is_colliding)
             if col not in self.handled_collisions:
 
-                other_collision_point = col.my_collider.closest_point_on_surface(col.position, self.position)
-                my_collision_point = self.my_collider.closest_point_on_surface(self.position, col.position)
+                other_collision_point = col.my_collider.closest_point_on_surface(col.position, self.position)[0]
+                my_collision_point = self.my_collider.closest_point_on_surface(self.position, other_collision_point)[0]
                 
                 # Check the normal of the colision, assuming AABB colisions
                 collision_normal = Vector3(0,0,0)
@@ -129,12 +129,15 @@ class Ball(GameObject):
                    #reflectionDirection = ProjectileDirection - 2(ProjectileDirection DOT wallsNormalVector)*wallsNormalVector. 
                    
                     
-                    direction_normal_dot = min(1, max(-1,(self.direction_vector.dot(collision_normal)))) 
+                    direction_normal_dot = self.direction_vector.dot(collision_normal)
+                    print(collision_normal)
+                    print(direction_normal_dot)
                    
                     ricochet = self.direction_vector - 2 * direction_normal_dot * collision_normal
                    
-                    print(ricochet)
+                   
                     self.direction_vector = ricochet
+                 
                     
                     #dot = (min(1, max(-1, ricochet.dot(self.up()))))
                     #print(dot)
@@ -146,6 +149,7 @@ class Ball(GameObject):
                     #print(angle_rad)
                     #self.rotate_angle(angle_rad)
                     #self.rotation = Quaternion.AngleAxis(Vector3(0,0,1),math.radians(angle_rad * 10)) 
+                    
                     if col.name == "BLOCK":
                         col.queue_destroy = True
                 
@@ -165,7 +169,7 @@ class Ball(GameObject):
         self.position = self.starting_pos
         self.active = False
         self.ball_speed = self.DEFAULT_SPEED
-        self.direction_vector = -self.up()
+        self.direction_vector = Vector3(-self.up().x, -self.up().y, -self.up().z)
         
         
         
