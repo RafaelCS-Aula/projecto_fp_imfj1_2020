@@ -52,53 +52,68 @@ class Ball(GameObject):
         unhandled_colisions = [c for c in collisions]
       
         for col in unhandled_colisions:
-            print("With: " + col.name)
-            print(col not in self.handled_collisions)
-            print(self.my_collider.is_colliding)
+          #  print("With: " + col.name)
+          #  print(col not in self.handled_collisions)
+          #  print(self.my_collider.is_colliding)
             if col not in self.handled_collisions:
+           #     print(self.up())
+            #    print(-self.up())
+                other_collision_point = col.my_collider.closest_point_on_surface(col.position, self.position)
+                my_collision_point = self.my_collider.closest_point_on_surface(self.position, col.position)
+                
                 if col.name == "PADDLE":
-                   print("PADDLE HIT")
-                   direction = self.position - col.position
-                   direction.normalize()
-                   dot = direction.dot(self.up())
+                    print("PADDLE HIT")
+                    direction = self.position - col.position
+                    direction.normalize()
+                    dot = direction.dot(self.up())
                    
-                   #clamp dot product to exactl 1 or -1
-                   if dot > 1:
-                       dot = 1
-                   elif dot < -1:
-                       dot = -1
+                    #clamp dot product to exactl 1 or -1
+                    if dot > 1:
+                        dot = 1
+                    elif dot < -1:
+                        dot = -1
                     
-                   #print(dot)
+                    #print(dot)
                    
-                   mag_product = direction.magnitude_squared() * self.up().magnitude_squared()
+                    mag_product = direction.magnitude_squared() * self.up().magnitude_squared()
                    
-                   #print(mag_product)
-                   angle_rad = math.acos(dot / mag_product)
+                    #print(mag_product)
+                    angle_rad = math.acos(dot / mag_product)
                    
-                   mod = -1
-                   if self.position.x < col.position.x:
-                       mod = 1
-                   self.rotate_angle(angle_rad * mod * 3)
+                    mod = -1
+                    if self.position.x < col.position.x:
+                        mod = 1
+                    self.rotate_angle(-angle_rad)
                    #self.rotation = Quaternion.AngleAxis(Vector3(0,0,1), math.radians(angle_rad * 3)) * self.rotation
                 else:
-                   print("STANDART HIT")
+                    print("STANDART HIT")
                    # Reflection formula
                    #reflectionDirection = ProjectileDirection - 2(ProjectileDirection DOT wallsNormalVector)*wallsNormalVector. 
                    
+                    collision_normal = Vector3(0,0,0)
+                    if my_collision_point.x > self.position.x: #right side hit
+                        collision_normal = -col.right() #Hit surface is col's left side
+                    elif my_collision_point.x < self.position.x:
+                        collision_normal = -col.right()
+                    elif my_collision_point.y < self.position.y: # Bottom side
+                        collision_normal = col.up()
+                    elif my_collision_point.y > self.position.y: # top side hit
+                        collision_normal = -col.up()
+                    
+                    ricochet = self.up() - (2*(self.up().dot(collision_normal.normalized()))) * collision_normal
                    
-                   ricochet = self.up() - (2*(self.up().dot(col.up().normalized()))) * col.up()
+                    print(ricochet)
                    
-                   print(ricochet)
+                    dot = ricochet.dot(self.up())
+                    mag_product = ricochet.magnitude_squared() * self.up().magnitude_squared()
                    
-                   dot = ricochet.dot(col.up())
-                   mag_product = ricochet.magnitude_squared() * col.up().magnitude_squared()
+                    #print(mag_product)
+                    angle_rad = math.acos(dot / mag_product)
                    
-                   #print(mag_product)
-                   angle_rad = math.acos(dot / mag_product)
-                   
-                   self.rotate_angle(180 - angle_rad)
-                   if col.name == "BLOCK":
-                       col.queue_destroy = True
+                    #self.rotate_angle(angle_rad)
+                    self.rotation *= Quaternion.AngleAxis(Vector3(0,0,1),angle_rad)
+                    if col.name == "BLOCK":
+                        col.queue_destroy = True
                 
                 self.ball_speed += self.SPEED_INCREMENT
             self.handled_collisions.append(col)
@@ -110,7 +125,7 @@ class Ball(GameObject):
         Args:
             angle (Vector3): Angle in degrees to snap the rotation to
         """
-        self.rotation = Quaternion.AngleAxis(Vector3(0,0,1), math.radians(angle))
+        self.rotation = Quaternion.AngleAxis(Vector3(0,0,1), angle)
         
         
         
