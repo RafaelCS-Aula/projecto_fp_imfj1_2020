@@ -64,19 +64,22 @@ class Scene:
         #    self.objects[obj].render(screen, clip_matrix)
         #    for child in self.objects[obj].children:
         #        child.render(screen, clip_matrix)
+        
+        # Display Text
+        for txt in self.text_agents:
+            txt.display_text(screen)
             
     def start_scene(self):
         """Executes the setup method for all game objects of the scene and gathers collision agents
         """
-        
+        self.text_agents = []
         
         for obj in range(len(self.objects)):
             self.objects[obj].setup()
             for child in self.objects[obj].children:
                 child.setup()
         self.update_collision_agents()
-        print("COLLIDERS: ")
-        print(len(self.collision_agents))
+        self.update_text_agents()
             
     def update_objects(self, delta):
         """Updates all the objects' states
@@ -121,6 +124,8 @@ class Scene:
                     collisions.append(foreign)
             agent.handle_collisions(collisions, delta)
             
+        
+            
     def get_objects_by_name(self, name):
         listing = []
         for obj in self.objects:
@@ -137,4 +142,14 @@ class Scene:
             for child in self.objects[obj].children:
                 if(child.my_collider is not None):
                     self.collision_agents.append(child)
+                    
+    def update_text_agents(self):
+        self.text_agents = []
+        
+        for obj in range(len(self.objects)):
+            if(self.objects[obj].name == "TEXTDISPLAY"):
+                self.text_agents.append(self.objects[obj])
+            for child in self.objects[obj].children:
+                if child.name == "TEXTDISPLAY":
+                    self.text_agents.append()(child)
         
