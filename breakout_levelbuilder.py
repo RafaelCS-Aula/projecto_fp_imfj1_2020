@@ -27,7 +27,7 @@ class LevelBuilder(GameObject):
     MID_X = GRID_X / 2
     #midpoint_Y = GRID_Y / 2
     GAME_BALL = Ball("BALL", start_pos=Vector3(0, -GRID_Y * (SPACE_Y - 0.3), 0))
-    GAME_PADDLE = Paddle("PADDLE", start_pos=Vector3(0, -GRID_Y * SPACE_Y, 0), color=Color(1,0,0,1))
+    GAME_PADDLE = Paddle("PADDLE", height=0.5, width=2, start_pos=Vector3(0, -GRID_Y * SPACE_Y, 0), color=Color(1,0,0,1))
     
     current_stage = 0
     block_grid = []
