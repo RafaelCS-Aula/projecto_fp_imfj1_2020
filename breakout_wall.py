@@ -3,6 +3,8 @@ from bo_collider_aabb import AABB_Collider
 from vector3 import Vector3
 
 class Wall(Block):
+    """Class for indestructible blocks that limit the play area
+    """
     def setup(self):
         self.my_collider = AABB_Collider(Vector3(self.width, self.height, self.depth))
         

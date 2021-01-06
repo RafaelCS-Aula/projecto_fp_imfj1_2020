@@ -2,7 +2,8 @@ from vector3 import Vector3
 from abc import abstractmethod
 
 class Collider():
-    
+    """Base class for Colliders
+    """
     is_colliding = False
     
     @abstractmethod

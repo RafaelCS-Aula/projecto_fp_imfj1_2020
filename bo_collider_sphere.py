@@ -2,7 +2,9 @@ from bo_collider import Collider
 from vector3 import Vector3
 
 class Sphere_Collider(Collider):
-    
+    """Collider for Spheres
+
+    """
     def __init__(self, radius: float):
         self.radius = radius
     

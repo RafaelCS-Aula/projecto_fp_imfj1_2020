@@ -15,7 +15,8 @@ from bo_text_display import TextDisplay
 
 
 class LevelBuilder(GameObject):
-
+    """Generates the gameplay elements of each stage
+    """
 
     GRID_X = 10
     GRID_Y = 6
@@ -101,6 +102,7 @@ class LevelBuilder(GameObject):
         
         scene_to_populate.update_collision_agents()
         
+        # Nudge the blocks a bit
         for c in self.block_grid:
             c.position.x -= self.MID_X
   

@@ -1,4 +1,6 @@
-import pygame
+"""Holds current player score and all the bonuses or penalties that can be applied to it
+"""
+
 
 current_score = 0
 SCORE_LEVEL_BONUS = 25

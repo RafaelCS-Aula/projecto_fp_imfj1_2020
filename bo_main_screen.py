@@ -8,7 +8,8 @@ from bo_text_display import TextDisplay
 
 
 class MainMenu(GameObject):
-
+    """Controls text and input on main menu
+    """
     START_KEY = pygame.K_SPACE
     
     TITLE_DISPLAY = TextDisplay((200,150), "BREAKOUT BREAKDOWN INFINITE", text_size=48)

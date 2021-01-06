@@ -14,7 +14,8 @@ from bo_collider_sphere import Sphere_Collider
 
 
 class Ball(GameObject):
-    
+    """Game object that bounces around the stage and destroys blocks
+    """
     ball_speed = 0
     starting_pos = Vector3(0,0,0)
     DEFAULT_RADIUS = 0.6
@@ -63,43 +64,44 @@ class Ball(GameObject):
     
     def update_behaviour(self, delta):
         
+        # Do nothing but check for input if not active
         if not self.active:
             keys = pygame.key.get_pressed()
             if keys[self.ACTIVATE_BALL_KEY]:
                 self.active = True
             return
+        
+        # Update the score display
         self.score_number_display.text = str(ScoreKeeper.current_score) + " (x" + str(self.combo) + ")"
         
-        
+        # Rotate over itself to show ball speed
         self.rotation = Quaternion.AngleAxis(self.up(), 20 * math.radians(delta * self.ball_speed)) * self.rotation
+        
+        # Keep it aligned with the "ground"
         self.position.z = 0
+        
+        # Reset the list of unhandled collisions, since we're not even colliding
         if not self.my_collider.is_colliding:
-            #print("not hit")
             self.handled_collisions = []
-        # Ball goes forward
-        #self.position.z = 0
+
         
-        
+        # Move the ball
         self.position += self.ball_speed * self.direction_vector.normalized() * delta
-        #print(self.direction_vector)
-       
-        
             
-        
+        # If ball falls under the screen, reset it
         if self.position.y < self.LOWER_LIMIT:
             print("Ball Reset")
             ScoreKeeper.current_score += ScoreKeeper.SCORE_DEATH_PENALTY
             self.reset_ball()
         
     def handle_collisions(self, collisions: [], delta):
+        
         if not self.active:
             return
+        
         unhandled_colisions = [c for c in collisions]
       
         for col in unhandled_colisions:
-          #  print("With: " + col.name)
-          #  print(col not in self.handled_collisions)
-          #  print(self.my_collider.is_colliding)
             if col not in self.handled_collisions:
 
                 my_collision_point = self.my_collider.closest_point_on_surface(self.position, col.position)
@@ -114,31 +116,35 @@ class Ball(GameObject):
                 # Reflection formula
                 #reflectionDirection = ProjectileDirection - 2(ProjectileDirection DOT wallsNormalVector)*wallsNormalVector
                     
+                # Clamped dot product between direction of collision with surface normal
                 direction_normal_dot = max(-1, min(1, self.direction_vector.dot(collision_normal)))
                    
                 ricochet = self.direction_vector - 2 * direction_normal_dot * collision_normal 
-                    
+                
+                #we've struck the paddle
                 if col.name == "PADDLE":
-                    #print("PADDLE HIT")
                     self.combo = 0
+                    
+                    #Direction from center of block to ball
                     col_to_centre = other_collision_point[0] - col.position
                     col_to_centre.normalize()
                     
+                    #Bounce using that direction
                     ricochet = col_to_centre
-                    self.direction_vector = ricochet 
-                    #print(ricochet)
                 else:
-                   # print("STANDART HIT")
-                   
-                    self.direction_vector = ricochet
-                   
+                    #we've hit a normal Block
                     if col.name == "BLOCK":
+                        # Make this block tell the scene it is up to die
                         col.queue_destroy = True
                         
+                        # Add to our current score, take into account the combo
                         ScoreKeeper.current_score += ScoreKeeper.SCORE_BLOCK_DESTROY + (ScoreKeeper.SCORE_COMBO_BONUS * self.combo)
                         self.combo += 1
-                
+                #
+                self.direction_vector = ricochet
                 self.ball_speed += self.SPEED_INCREMENT
+                
+                #Add this collision to the handled bunch so we dont worry about it again
                 self.handled_collisions.append(col)
                 #print(col.name)"""
        

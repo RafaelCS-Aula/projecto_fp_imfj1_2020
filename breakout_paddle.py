@@ -6,7 +6,8 @@ from bo_collider_aabb import AABB_Collider
 from vector3 import Vector3
 
 class Paddle(Block):
-    
+    """Player controlled paddle that sends the ball flying when hit
+    """
 
     
     # for mouse input correction
@@ -38,7 +39,8 @@ class Paddle(Block):
         
         keys = pygame.key.get_pressed()
         
-        if not self.mouse_controlled:
+        
+        if not self.mouse_controlled: #Keyboard controls
             if(keys[pygame.K_RIGHT]):
                 self.paddle_direction = 1
             elif(keys[pygame.K_LEFT]):
@@ -46,14 +48,13 @@ class Paddle(Block):
             else:
                 self.paddle_direction = 0
             self.position.x += self.PADDLE_SPEED * self.paddle_direction * delta
-        elif self.mouse_controlled:
+        elif self.mouse_controlled: # Match x with mouse x
             if pygame.mouse.get_focused():
                 mouse_pos = pygame.mouse.get_pos()
                 # Taken from game sample
                 mouse_pos = ((mouse_pos[0] / self.H_RES) * 2 - 1, (mouse_pos[1] / self.V_RES) * 2 - 1)
-                self.position.x = mouse_pos[0] * self.CAMERA_CORRECTION # Multiply by camera's Y position at angle -35
-                #print(pygame.mouse.get_pos()[0])  
-        if keys[self.CONTROLS_FLIP_KEY]:
+                self.position.x = mouse_pos[0] * self.CAMERA_CORRECTION 
+        if keys[self.CONTROLS_FLIP_KEY]: # Switch between mouse and keyboard controls
             if self.mouse_controlled:
                 self.mouse_controlled = False
             elif not self.mouse_controlled:

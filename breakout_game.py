@@ -20,7 +20,7 @@ VERTICAL_RESOLUTION = 720
 
 
 
-__current_scene = Scene("empty", pygame.Color(0,255,0))
+__current_scene = None
 
 # Scenes initialisation
 game_scene = Scene("GameScene", pygame.Color(0,0,30))
@@ -45,23 +45,28 @@ def __Main():
     
     # Tilt camera to desired view
     game_camera.position -= Vector3(0, 5, 20)
-    #origin = Vector3(0, 0, 0)
-    #direction_to_origin = (game_camera.position - origin).normalized()
-    #angle = math.atan2(direction_to_origin.y, direction_to_origin.x)
     angle = -15
-    game_camera.rotation = Quaternion.AngleAxis(Vector3(1, 0, 0), math.radians(angle) )
+    game_camera.rotation = Quaternion.AngleAxis(Vector3(1, 0, 0), math.radians(angle))
     
     game_scene.camera = game_camera
     menu_scene.camera = menu_camera
+    
+    # Correct paddle movement to match with mouse position on screen
     Paddle.V_RES = VERTICAL_RESOLUTION
     Paddle.H_RES = HORIZONTAL_RESOLUTION
-    Paddle.CAMERA_CORRECTION = -game_camera.position.y + 7 #  at angle of -15
+    Paddle.CAMERA_CORRECTION = -game_camera.position.y + 7 #  mat angle of -15
+    
+    # Make and trigger level builder for the first stage
     level_builder = LevelBuilder("Level Builder")
     level_builder.make_level(game_scene)
+    
+    # Add it to the game scene
     game_scene.add_object(level_builder)
-        
+    
+    # Create and add a menu object to the menu scene
     menu_scene.add_object(MainMenu("MENU"))
     
+    # Fill the scene manager's scene list
     SceneManager.scene_list = []
     SceneManager.scene_list.append(menu_scene)
     SceneManager.scene_list.append(game_scene)

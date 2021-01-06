@@ -8,7 +8,9 @@ from color import Color
 from quaternion import Quaternion
 from bo_collider_aabb import AABB_Collider
 class Block(GameObject):
-    
+    """Base class for the blocks in the field
+
+    """
     DEFAULT_HEIGHT = 0.8
     DEFAULT_WIDTH = 1.5
     DEFAULT_DEPTH = 1

@@ -1,3 +1,7 @@
+"""Holds list of scenes and handles scene switching on command
+
+"""
+
 scene_list = []
 
 current_scene = None

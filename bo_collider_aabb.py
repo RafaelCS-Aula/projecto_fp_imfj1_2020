@@ -2,7 +2,8 @@ from bo_collider import Collider
 from vector3 import Vector3
 
 class AABB_Collider(Collider):
-
+    """Collider for Axis-Aligned Bounding Box a.k.a Cube with no rotation
+    """
 
     def __init__(self, size: Vector3):
         self.dimensions = size

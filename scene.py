@@ -65,7 +65,7 @@ class Scene:
         #    for child in self.objects[obj].children:
         #        child.render(screen, clip_matrix)
         
-        # Display Text
+        # Update the TextDisplay Objects
         for txt in self.text_agents:
             txt.display_text(screen)
             
@@ -87,7 +87,10 @@ class Scene:
         Args:
             delta ([float]): Time passed since last frame
         """
+        # Objects being destroyed this frame
         objects_destroy = []
+        
+        # gather all objects queued for destruction
         for obj in range(len(self.objects)):
             
             self.objects[obj].update_behaviour(delta)
@@ -99,7 +102,8 @@ class Scene:
                     self.remove_object(child)
                 else:
                     child.update_behaviour(delta)
-        
+                    
+        # Destroy objects who have queued themselves up for destruction
         for o in objects_destroy:
             self.remove_object(o)
             if o in self.collision_agents:
@@ -127,6 +131,14 @@ class Scene:
         
             
     def get_objects_by_name(self, name):
+        """Get all objects in this scene with the given name
+
+        Args:
+            name (str): Name of objects to find
+
+        Returns:
+            Blocks3d[]: All objects found with that name 
+        """
         listing = []
         for obj in self.objects:
             if obj.name == name:
@@ -134,6 +146,8 @@ class Scene:
         return listing
 
     def update_collision_agents(self):
+        """Checks the scene objects to find who has colliders to include them in the collision update
+        """
         self.collision_agents = []
         
         for obj in range(len(self.objects)):
@@ -144,6 +158,8 @@ class Scene:
                     self.collision_agents.append(child)
                     
     def update_text_agents(self):
+        """Find all TextDisplay objects to include them in the text update
+        """
         self.text_agents = []
         
         for obj in range(len(self.objects)):
