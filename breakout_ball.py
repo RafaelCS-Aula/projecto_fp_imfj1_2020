@@ -44,9 +44,10 @@ class Ball(GameObject):
         
         self.active = False
         
-        self.score_display = TextDisplay((16,300), "SCORE: ")
+        self.score_display = TextDisplay((16,300), " -- SCORE -- ")
+        self.score_number_display = TextDisplay((16,316), "0 x(combo)", text_size=18, text_color=(100, 200, 100))
         
-        self.activation_display = TextDisplay((16,200),  "Press [" + pygame.key.name(self.ACTIVATE_BALL_KEY) +"] to activate ball")
+        self.activation_display = TextDisplay((16,200),  "")
         
         self.combo = 0
     
@@ -54,18 +55,21 @@ class Ball(GameObject):
        self.reset_ball()
        self.add_child(self.activation_display)
        self.add_child(self.score_display)
+       self.add_child(self.score_number_display)
+       self.activation_display.text = "Press [" + pygame.key.name(self.ACTIVATE_BALL_KEY) +"] to activate ball"
        
         
 
     
     def update_behaviour(self, delta):
+        
         if not self.active:
             keys = pygame.key.get_pressed()
             if keys[self.ACTIVATE_BALL_KEY]:
                 self.active = True
             return
+        self.score_number_display.text = str(ScoreKeeper.current_score) + " (x" + str(self.combo) + ")"
         
-        self.score_display.text = "-- SCORE -- \n " + str(ScoreKeeper.current_score)
         
         self.rotation = Quaternion.AngleAxis(self.up(), 100 * math.radians(delta * self.ball_speed)) * self.rotation
         
@@ -84,6 +88,7 @@ class Ball(GameObject):
         
         if self.position.y < self.LOWER_LIMIT:
             print("Ball Reset")
+            ScoreKeeper.current_score += ScoreKeeper.SCORE_DEATH_PENALTY
             self.reset_ball()
         
     def handle_collisions(self, collisions: [], delta):

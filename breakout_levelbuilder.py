@@ -1,4 +1,5 @@
 import random
+import bo_score_keeper as ScoreKeeper
 
 from camera import Camera
 from breakout_ball import Ball
@@ -8,6 +9,8 @@ from vector3 import Vector3
 from color import Color
 from breakout_gameobject import GameObject
 from breakout_paddle import Paddle
+from bo_text_display import TextDisplay
+
 
 
 
@@ -28,14 +31,18 @@ class LevelBuilder(GameObject):
     GAME_BALL = Ball("BALL", start_pos=Vector3(0, -GRID_Y * (SPACE_Y - 0.3), 0))
     GAME_PADDLE = Paddle("PADDLE", start_pos=Vector3(0, -GRID_Y * SPACE_Y, 0), color=Color(1,0,0,1))
     
+    current_stage = 0
     block_grid = []
     living_blocks = []
     my_scene = None
+    
+    stage_display = TextDisplay((16, 356),"", text_color=(255, 100,100))
 
     
+    
     def setup(self):
-        #self.make_level(self.BASE_BLOCK_AMOUNT)
-        pass
+        self.add_child(self.stage_display) 
+        
         
         
     def update_behaviour(self, delta):
@@ -44,8 +51,14 @@ class LevelBuilder(GameObject):
         if len(self.living_blocks) <= 0:
             self.GAME_BALL.reset_ball()
             self.make_level(self.my_scene, min(self.GRID_X * self.GRID_Y, self.BASE_BLOCK_AMOUNT + self.LEVEL_BLOCK_INCREMENT))
+            
+        self.stage_display.text = "STAGE: " + str(self.current_stage)
         
     def make_level(self, scene_to_populate, blocks_amount = BASE_BLOCK_AMOUNT):
+        
+        ScoreKeeper.current_score += ScoreKeeper.SCORE_LEVEL_BONUS * self.current_stage
+        self.current_stage += 1
+        
         layout_grid = [[(x,y) for y in range(self.GRID_Y + 1)] for x in range(self.GRID_X + 1)]
         placed_blocks = 0
         self.my_scene = scene_to_populate
