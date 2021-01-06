@@ -26,15 +26,22 @@ class Paddle(Block):
     
     current_ctrls_text = TextDisplay((16, 260), "", text_size=14, text_color=(220, 220, 220))
     
+    # Buffer to make inputs more responsive
+    INPUT_BUFFER = 0.2
+    buffer_count = 0
+        
     def setup(self):
        
         self.add_child(self.controls_text)
         self.add_child(self.current_ctrls_text)
         self.controls_text.text = "Press [" + pygame.key.name(self.CONTROLS_FLIP_KEY) +"] to switch controls"
         self.my_collider = AABB_Collider(Vector3(self.width, self.height, self.depth))
-
+        self.buffer_count = 0
+        
+        
     def update_behaviour(self, delta):
         
+        self.buffer_count += 1 * delta 
         self.current_ctrls_text.text = self.get_controls()
         
         keys = pygame.key.get_pressed()
@@ -54,11 +61,13 @@ class Paddle(Block):
                 # Taken from game sample
                 mouse_pos = ((mouse_pos[0] / self.H_RES) * 2 - 1, (mouse_pos[1] / self.V_RES) * 2 - 1)
                 self.position.x = mouse_pos[0] * self.CAMERA_CORRECTION 
-        if keys[self.CONTROLS_FLIP_KEY]: # Switch between mouse and keyboard controls
+                
+        if keys[self.CONTROLS_FLIP_KEY] and self.buffer_count >= self.INPUT_BUFFER: # Switch between mouse and keyboard controls
             if self.mouse_controlled:
                 self.mouse_controlled = False
             elif not self.mouse_controlled:
                 self.mouse_controlled = True
+            self.buffer_count = 0
                             
     def handle_collisions(self, collisions: [], delta):
          pass

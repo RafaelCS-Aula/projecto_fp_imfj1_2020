@@ -24,6 +24,7 @@ class Ball(GameObject):
     LOWER_LIMIT = -7
     
     ACTIVATE_BALL_KEY = pygame.K_SPACE
+    INPUT_BUFFER = 0.2
     
     def __init__(self, name, start_pos, radius = DEFAULT_RADIUS, speed = DEFAULT_SPEED,  color = Color(0,1,1,1)):
         self.radius = Vector3(radius, radius, radius)
@@ -51,6 +52,10 @@ class Ball(GameObject):
         self.activation_display = TextDisplay((16,200),  "")
         
         self.combo = 0
+        
+        # Buffer to make inputs more responsive
+        
+        self.buffer_count = 0
     
     def setup(self):
        self.reset_ball()
@@ -59,6 +64,7 @@ class Ball(GameObject):
        self.add_child(self.score_number_display)
        self.activation_display.text = "Press [" + pygame.key.name(self.ACTIVATE_BALL_KEY) +"] to activate ball"
        
+       
         
 
     
@@ -66,8 +72,9 @@ class Ball(GameObject):
         
         # Do nothing but check for input if not active
         if not self.active:
+            self.buffer_count += 1 * delta
             keys = pygame.key.get_pressed()
-            if keys[self.ACTIVATE_BALL_KEY]:
+            if keys[self.ACTIVATE_BALL_KEY] and self.buffer_count >= self.INPUT_BUFFER:
                 self.active = True
             return
         
