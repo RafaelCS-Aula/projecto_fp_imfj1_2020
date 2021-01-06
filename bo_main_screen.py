@@ -13,7 +13,7 @@ class MainMenu(GameObject):
     START_KEY = pygame.K_SPACE
     
     TITLE_DISPLAY = TextDisplay((200,150), "BREAKOUT BREAKDOWN INFINITE", text_size=48)
-    SUBTITLE_DISPLAY = TextDisplay((250,210), "A project developed for the Bachelor in Videojogos at Lusofona University, by Rafael Castro e Silva", text_size=16)
+    SUBTITLE_DISPLAY = TextDisplay((200,210), "A project developed for the Bachelor in Videojogos at Lusofona University, by Rafael Castro e Silva 21903059", text_size=16)
     
     
     
