@@ -15,13 +15,13 @@ class Paddle(Block):
     H_RES = 0
     CONTROLS_FLIP_KEY = pygame.K_q
     
-    PADDE_SPEED = 6
+    PADDLE_SPEED = 10
     
         
     mouse_controlled = False
     paddle_direction = 0
     
-    controls_text = TextDisplay((16, 240), "Press [" + pygame.key.name(CONTROLS_FLIP_KEY) +"] to switch controls", text_color=(255, 255, 255))
+    controls_text = TextDisplay((16, 240), "", text_color=(255, 255, 255))
     
     current_ctrls_text = TextDisplay((16, 260), "", text_size=14, text_color=(220, 220, 220))
     
@@ -29,7 +29,7 @@ class Paddle(Block):
        
         self.add_child(self.controls_text)
         self.add_child(self.current_ctrls_text)
-        
+        self.controls_text.text = "Press [" + pygame.key.name(self.CONTROLS_FLIP_KEY) +"] to switch controls"
         self.my_collider = AABB_Collider(Vector3(self.width, self.height, self.depth))
 
     def update_behaviour(self, delta):
@@ -45,7 +45,7 @@ class Paddle(Block):
                 self.paddle_direction = -1
             else:
                 self.paddle_direction = 0
-            self.position.x += self.PADDE_SPEED * self.paddle_direction * delta
+            self.position.x += self.PADDLE_SPEED * self.paddle_direction * delta
         elif self.mouse_controlled:
             if pygame.mouse.get_focused():
                 mouse_pos = pygame.mouse.get_pos()
@@ -60,8 +60,6 @@ class Paddle(Block):
                 self.mouse_controlled = True
                             
     def handle_collisions(self, collisions: [], delta):
-        #for c in collisions:
-         #   print("Paddle HIT by:" + c.name)
          pass
      
     def get_controls(self):
