@@ -83,12 +83,13 @@ class LevelBuilder(GameObject):
                         #print("Placed ")
                        # print(placed_blocks)
                         #print("Blocks")
-        # Side Walls
-        self.block_grid.append(Wall("WALL", start_pos=Vector3(self.GRID_X * self.SPACE_X , 0, 0), color=Color(1,1,1,1), height= 15))
-        self.block_grid.append(Wall("WALL", start_pos=Vector3(-self.SPACE_X, 0, 0), color=Color(1,1,1,1), height= 15))
+        if self.current_stage == 1:
+            # Side Walls
+            self.block_grid.append(Wall("WALL", start_pos=Vector3(self.GRID_X * self.SPACE_X , 0, 0), color=Color(1,1,1,1), height= 15))
+            self.block_grid.append(Wall("WALL", start_pos=Vector3(-self.SPACE_X, 0, 0), color=Color(1,1,1,1), height= 15))
         
-        # Top Wall
-        self.block_grid.append(Wall("WALL", start_pos=Vector3(self.MID_X , self.GRID_Y * self.SPACE_Y + 1, 0), color=Color(1,1,1,1), width= 20, depth=2))
+            # Top Wall
+            self.block_grid.append(Wall("WALL", start_pos=Vector3(self.MID_X , self.GRID_Y * self.SPACE_Y + 1, 0), color=Color(1,1,1,1), width= 20, depth=2))
                     
         #Populate scene
         for b in self.block_grid:
