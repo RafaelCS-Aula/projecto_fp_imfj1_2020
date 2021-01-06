@@ -39,7 +39,7 @@ class Ball(GameObject):
         self.ball_speed = speed
         self.direction_vector = Vector3(0,0,0)
         
-        self.my_collider = Sphere_Collider(radius * 0.2)
+        self.my_collider = Sphere_Collider(radius *0.3)
         self.handled_collisions = []
         
         self.active = False
@@ -71,8 +71,8 @@ class Ball(GameObject):
         self.score_number_display.text = str(ScoreKeeper.current_score) + " (x" + str(self.combo) + ")"
         
         
-        self.rotation = Quaternion.AngleAxis(self.up(), 100 * math.radians(delta * self.ball_speed)) * self.rotation
-        
+        self.rotation = Quaternion.AngleAxis(self.up(), 20 * math.radians(delta * self.ball_speed)) * self.rotation
+        self.position.z = 0
         if not self.my_collider.is_colliding:
             #print("not hit")
             self.handled_collisions = []
@@ -114,21 +114,21 @@ class Ball(GameObject):
                 # Reflection formula
                 #reflectionDirection = ProjectileDirection - 2(ProjectileDirection DOT wallsNormalVector)*wallsNormalVector
                     
-                direction_normal_dot = self.direction_vector.dot(collision_normal)
+                direction_normal_dot = max(-1, min(1, self.direction_vector.dot(collision_normal)))
                    
                 ricochet = self.direction_vector - 2 * direction_normal_dot * collision_normal 
                     
                 if col.name == "PADDLE":
-                    print("PADDLE HIT")
+                    #print("PADDLE HIT")
                     self.combo = 0
                     col_to_centre = other_collision_point[0] - col.position
                     col_to_centre.normalize()
                     
                     ricochet = col_to_centre
                     self.direction_vector = ricochet 
-                    print(ricochet)
+                    #print(ricochet)
                 else:
-                    print("STANDART HIT")
+                   # print("STANDART HIT")
                    
                     self.direction_vector = ricochet
                    
@@ -139,7 +139,7 @@ class Ball(GameObject):
                         self.combo += 1
                 
                 self.ball_speed += self.SPEED_INCREMENT
-            self.handled_collisions.append(col)
+                self.handled_collisions.append(col)
                 #print(col.name)"""
        
     def rotate_angle(self, angle):
