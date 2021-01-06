@@ -24,6 +24,7 @@ class TextDisplay(GameObject):
         self.text = text
         self.text_color = text_color
         self.text_size = text_size
+        self.visible = True
         
         self.GAME_FONT = pygame.freetype.SysFont("ComicSansMS", self.text_size)
         
@@ -40,4 +41,6 @@ class TextDisplay(GameObject):
         pass
     
     def display_text(self, surface):
+        if not self.visible:
+            return
         self.GAME_FONT.render_to(surface, self.screen_position, self.text, self.text_color)

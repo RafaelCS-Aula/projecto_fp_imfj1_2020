@@ -10,7 +10,7 @@ from color import Color
 from quaternion import Quaternion
 from breakout_levelbuilder import LevelBuilder
 from breakout_paddle import Paddle
-from breakout_ball import Ball
+from bo_main_screen import MainMenu
 #from color import Color
 
 HORIZONTAL_RESOLUTION = 1280
@@ -24,7 +24,7 @@ __current_scene = Scene("empty", pygame.Color(0,255,0))
 
 # Scenes initialisation
 game_scene = Scene("GameScene", pygame.Color(0,0,30))
-menu_scene = Scene("MainMenu",pygame.Color(255,0,0))
+menu_scene = Scene("MainMenu",pygame.Color(100,0,0))
 
 def __Main():
     """
@@ -41,7 +41,7 @@ def __Main():
     
     # Cameras
     game_camera = Camera(False, HORIZONTAL_RESOLUTION, VERTICAL_RESOLUTION)
-    menu_camera = Camera(False, HORIZONTAL_RESOLUTION, VERTICAL_RESOLUTION)
+    menu_camera = Camera(True, HORIZONTAL_RESOLUTION, VERTICAL_RESOLUTION)
     
     # Tilt camera to desired view
     game_camera.position -= Vector3(0, 5, 20)
@@ -60,6 +60,7 @@ def __Main():
     level_builder.make_level(game_scene)
     game_scene.add_object(level_builder)
         
+    menu_scene.add_object(MainMenu("MENU"))
     # Set up delta time
     delta_time = 0
     prev_time = time.time()
@@ -71,7 +72,7 @@ def __Main():
    
     is_running = True
     
-    switch_scene(game_scene)
+    switch_scene(menu_scene)
     # Main game loop
     while is_running:
 
