@@ -17,8 +17,6 @@ from bo_text_display import TextDisplay
 class LevelBuilder(GameObject):
 
 
-    #paddle_obj = Paddle()
-    #ball_obj = Ball()
     GRID_X = 10
     GRID_Y = 6
     LEVEL_BLOCK_INCREMENT = 4
@@ -103,15 +101,6 @@ class LevelBuilder(GameObject):
         
         scene_to_populate.update_collision_agents()
         
-        
-        #for i in range(0,len(block_grid)):
-         #   self.children.append(block_grid[i])
-        
-        
-        
-        #Move block field to center of screen
-        #self.position.y -= midpoint_Y
-        #self.position.x -= self.MID_X 
         for c in self.block_grid:
             c.position.x -= self.MID_X
   
