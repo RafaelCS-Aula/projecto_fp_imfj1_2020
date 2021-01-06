@@ -77,8 +77,8 @@ class Mesh:
             # Create the list that will store (temporarily) the transformed vertices
             tpoly = []
             # Uncomment next 2 lines for statistics
-            Mesh.stat_vertex_count += len(poly)
-            t0 = time.time()
+            #Mesh.stat_vertex_count += len(poly)
+            #t0 = time.time()
             for v in poly:
                 # Multiply vertex it by the clip matrix - This function is slightly faster than doing
                 # vout = v * clip_matrix, since it doesn't have to check types or create additional
