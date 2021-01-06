@@ -4,7 +4,6 @@
 
 * Rafael Castro e Silva, nº 21903059
   * Github: [RafaelCS-Aula](https://github.com/RafaelCS-Aula)
-  * Did everything, but did take some code from the samples.
 
 ----
 
@@ -14,7 +13,7 @@
 
 The project is a 3D _Breakout_ clone done using _pygame_ and the provided _PyXYZ_ engine, in accordance with the requirements in the [project briefing](Project_Instructions.md).
 
-In order to play game, run the file `breakout_game.py`. At any time the game can be exited by pressing the `ESC` key. 
+In order to play game, run the file `breakout_game.py`. At any time the game can be exited by pressing the `ESC` key.
 
 All modules made originally for the implementation of the game are named with the `breakout_` and `bo_` prefixes, this was done due to some issues with relative imports when trying to organize the files into sub-directories at the beginning of development. Besides original modules, the `Scene` module of the engine was also altered to accommodate the expansion in the functionality of its objects. 
 
@@ -22,7 +21,7 @@ Overall the game doesn't have major bugs, a minor one for example,is that the in
 
 ## Methodology
 
-For this project, most of the game and engine structure developed was based on the functionality of the `Unity Engine` and the `Godot Engine`, both of which the author was familiar with. These engines, more so `Unity`, were used as references on how to structure the needed expansions to the engine and the new classes that didn't immediately deal with gameplay logic. This made for an overall smooth development experience as most setbacks came from math errors and the author's inexperience with `Python`.
+For this project, most of the game and engine structure developed was based on the functionality of the `Unity Engine` and the `Godot Engine`, both of which the author was familiar with. These engines, more so `Unity`, were used as references on how to structure the needed expansions to the engine and the new classes that didn't immediately deal with gameplay logic. This made for an overall smooth development experience as most setbacks came from math errors and the author's inexperience with `Python`, these setbacks required some research, and solutions were found in the places listed bellow in the _References_ section. 
 ## Implemented Features
 
 * Title and Game screens
@@ -50,7 +49,11 @@ For this project, most of the game and engine structure developed was based on t
 ## References
 
 * [3DCollisions Book](https://gdbooks.gitbooks.io/3dcollisions/content/)
+  * AABB and Sphere collision detection
 * [PyGame docs](https://www.pygame.org/docs/)
+  * General referencing, input and text rendering
 * [StackOverflow](https://stackoverflow.com/)
+  * General Python questions
 * [Math Stack Exchange](https://math.stackexchange.com/)
+  * Reflection Formula
 * The sample applications
