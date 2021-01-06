@@ -60,9 +60,6 @@ def __Main():
     level_builder.make_level(game_scene)
     game_scene.add_object(level_builder)
         
-    
-    game_ball = level_builder.GAME_BALL
-    game_paddle = level_builder.GAME_PADDLE
     # Set up delta time
     delta_time = 0
     prev_time = time.time()
@@ -83,16 +80,16 @@ def __Main():
             if event.type == pygame.QUIT:
                 # Exits the application immediately
                 is_running = False
+            elif event.type == pygame.KEYDOWN:
+                # If ESC is pressed exit the game
+                if event.key == pygame.K_ESCAPE:
+                    is_running = False
         
         # Update the Display
         window.fill(__current_scene.BACKGROUND_COLOR)
         __current_scene.update_objects(delta_time)
         __current_scene.render(window)
-        
-       
-        ctrls_swap_str = pygame.key.name(game_paddle.CONTROLS_FLIP_KEY)
-        
-        pygame.draw.line(window, (120,0,0), (0, game_ball.LOWER_LIMIT + VERTICAL_RESOLUTION), (HORIZONTAL_RESOLUTION, game_ball.LOWER_LIMIT + VERTICAL_RESOLUTION), 10)
+    
         pygame.display.flip()
         
         # Updates delta time, so we we know how long has it been since the last frame
