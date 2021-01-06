@@ -2,11 +2,11 @@ import pygame
 import pygame.freetype
 import time
 import math
+import bo_scene_manager as SceneManager
 
 from scene import Scene
 from camera import Camera
 from vector3 import Vector3
-from color import Color
 from quaternion import Quaternion
 from breakout_levelbuilder import LevelBuilder
 from breakout_paddle import Paddle
@@ -61,6 +61,11 @@ def __Main():
     game_scene.add_object(level_builder)
         
     menu_scene.add_object(MainMenu("MENU"))
+    
+    SceneManager.scene_list = []
+    SceneManager.scene_list.append(menu_scene)
+    SceneManager.scene_list.append(game_scene)
+   
     # Set up delta time
     delta_time = 0
     prev_time = time.time()
@@ -70,9 +75,11 @@ def __Main():
     # Don't lock the mouse cursor to the game window
     pygame.event.set_grab(False)
    
+   
+   
     is_running = True
     
-    switch_scene(menu_scene)
+    SceneManager.switch_scene(0)
     # Main game loop
     while is_running:
 
@@ -86,6 +93,7 @@ def __Main():
                 if event.key == pygame.K_ESCAPE:
                     is_running = False
         
+        __current_scene = SceneManager.current_scene
         # Update the Display
         window.fill(__current_scene.BACKGROUND_COLOR)
         __current_scene.update_objects(delta_time)
@@ -97,10 +105,6 @@ def __Main():
         delta_time = time.time() - prev_time
         prev_time = time.time()
         
-def switch_scene(new_scene) -> Scene:
-    global __current_scene
-    __current_scene = new_scene
-    __current_scene.start_scene()
 
 
 __Main()

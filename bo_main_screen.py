@@ -1,4 +1,5 @@
 import pygame
+import bo_scene_manager as SceneManager
 
 from breakout_gameobject import GameObject
 from bo_text_display import TextDisplay
@@ -35,7 +36,8 @@ class MainMenu(GameObject):
         else:
             self.START_DISPLAY.visible = True
         
-        #if(keys[self.START_KEY]:
+        if keys[self.START_KEY]:
+            SceneManager.switch_scene(1)
             
 
     
