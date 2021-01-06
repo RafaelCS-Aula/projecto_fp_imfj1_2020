@@ -9,7 +9,7 @@ class Sphere_Collider(Collider):
     def within_bounds(self, my_position: Vector3, other_point: Vector3):
         
         distance = (my_position - other_point).magnitude_squared()
-        if distance < self.radius:
+        if distance <= self.radius:
             self.is_colliding = True
         elif distance > self.radius:
             self.is_colliding = False
